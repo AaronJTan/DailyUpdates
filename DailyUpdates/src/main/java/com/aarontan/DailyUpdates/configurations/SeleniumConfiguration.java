@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class SeleniumConfiguration {
     @Bean
     public WebDriver driver() {
-        System.setProperty("webdriver.chrome.driver","/home/auto/Desktop/DailyUpdates/gta-news-service/src/main/resources/chromedriver");
+        System.setProperty("webdriver.chrome.driver","/home/auto/Documents/DailyUpdates-Dashboard/DailyUpdates/src/main/resources/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--remote-allow-origins=*");
 		chromeOptions.addArguments("--headless");

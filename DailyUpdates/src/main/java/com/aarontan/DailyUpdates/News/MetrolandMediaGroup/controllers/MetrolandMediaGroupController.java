@@ -1,0 +1,75 @@
+package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.controllers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.constants.MunicipalityURLMap;
+import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.constants.RegionMunicipalityMap;
+import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.exceptions.MunicipalityNotFoundException;
+import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos.Article;
+import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos.RegionNews;
+import com.aarontan.DailyUpdates.response.ResponseObj;
+import com.aarontan.DailyUpdates.utils.Util;
+
+@RestController
+public class MetrolandMediaGroupController {
+    private RegionNews regionalNews;
+
+    @Autowired
+    public MetrolandMediaGroupController(WebDriver driver) {
+        this.regionalNews = new RegionNews(driver);
+    }
+
+    @GetMapping("/all-areas")
+    public ResponseEntity<ResponseObj> getAllAreas() {
+        return new ResponseObj.Builder()
+            .setStatus(HttpStatus.OK)
+            .setData(RegionMunicipalityMap.areas)
+            .build();
+    }
+
+    @GetMapping("/regions")
+    public ResponseEntity<ResponseObj> getRegions() {
+        Map<String, String[]> regionMunicipality = RegionMunicipalityMap.areas;
+        String[] regions = Util.getMapKeysAsArray(regionMunicipality);
+        
+        return new ResponseObj.Builder()
+            .setStatus(HttpStatus.OK)
+            .setData(regions)
+            .build();
+    }
+
+    @GetMapping("/{region}/municipalities")
+    public ResponseEntity<ResponseObj> getRegionMunicipalities(@PathVariable String region) {
+        String[] municipalities = RegionMunicipalityMap.areas.get(region);
+
+        if (municipalities == null) {
+            throw new MunicipalityNotFoundException("Region Not Found");
+        }
+
+        return new ResponseObj.Builder()
+            .setStatus(HttpStatus.OK)
+            .setData(municipalities)
+            .build();
+    }
+
+    @GetMapping("/news/{municipality}")
+    public List<Article> getMunicipalityLatestNews(@PathVariable String municipality) {
+        municipality = municipality.replaceAll("\\s", "").replace("-", " ");
+        String url = MunicipalityURLMap.municipalities.get(municipality);
+
+        if (url == null) {
+            throw new MunicipalityNotFoundException("Municipality Not Found");
+        }
+
+        return regionalNews.getLatestNews(url);
+    }
+}
