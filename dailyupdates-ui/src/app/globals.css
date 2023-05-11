@@ -21,7 +21,7 @@ body {
 }
 
 .main-content {
-  @apply mx-3 mt-16 text-sm
+  @apply mx-3 mt-16 mb-3 text-sm
 }
 
 .link-item {
