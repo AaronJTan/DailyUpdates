@@ -8,13 +8,11 @@ export default async function MarkhamNews() {
 
     const Headline = ({headline}) => {
         return (
-            <tr className="card-body-tr">
-                <td>
-                    <a href={headline.link} target="_blank">
-                        {headline.headline}
-                    </a>
-                </td>
-            </tr>
+            <div className="link-item">
+                <a href={headline.link} target="_blank">
+                    {headline.headline}
+                </a>
+            </div>
         );
     }
 
@@ -24,13 +22,9 @@ export default async function MarkhamNews() {
                 Markham News
             </CardTitle>
             <CardBody>
-                <table className="table-auto">
-                    <tbody>
-                        {headlines.map((headline) => 
-                            <Headline headline={headline} />
-                        )}
-                    </tbody>
-                </table>
+                {headlines.map((headline) => 
+                    <Headline headline={headline} />
+                )}
             </CardBody>
         </Card>
     );

@@ -9,13 +9,11 @@ export default async function TheHackerNews() {
 
     const Headline = ({headline}) => {
         return (
-            <tr className="card-body-tr">
-                <td>
-                    <a href={headline.url} target="_blank">
-                        {headline.headline}
-                    </a>
-                </td>
-            </tr>
+            <div className="link-item">
+                <a href={headline.url} target="_blank">
+                    {headline.headline}
+                </a>
+            </div>
         );
     }
 
@@ -25,13 +23,9 @@ export default async function TheHackerNews() {
                 The Hacker News
             </CardTitle>
             <CardBody>
-                <table className="table-auto">
-                    <tbody>
-                        {headlines.data.map((headline) => 
-                            <Headline headline={headline} />
-                        )}
-                    </tbody>
-                </table>
+                {headlines.data.map((headline) => 
+                    <Headline headline={headline} />
+                )}
             </CardBody>
         </Card>
     );

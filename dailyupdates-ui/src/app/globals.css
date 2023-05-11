@@ -24,6 +24,6 @@ body {
   @apply mx-3 mt-16 text-sm
 }
 
-.card-body-tr {
+.link-item {
   @apply border-b hover:bg-slate-100
 }
