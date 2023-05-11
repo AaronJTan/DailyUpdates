@@ -3,10 +3,18 @@ import CardBody from "../Card/CardBody";
 import CardTitle from "../Card/CardTitle";
 import {getCP24LatestNews} from "../../services/NewsService.js"
 import { cp24Category } from "./categories";
+import FetchError from "../ErrorMessages/FetchError";
 
 export default async function CP24News({category}) {
+    let error = false;
     category = category || cp24Category.LATESTNEWS;
-    const headlines = await getCP24LatestNews(category.path);
+    let headlines;
+
+    try {
+        headlines = await getCP24LatestNews(category.path);
+    } catch (err) {
+        error = true;
+    }
 
     const Headline = ({headline}) => {
         return (
@@ -24,9 +32,13 @@ export default async function CP24News({category}) {
                 CP24 {category.title}
             </CardTitle>
             <CardBody>
-                {headlines.data.map((headline) => 
-                    <Headline headline={headline} />
-                )}
+                {
+                    error ? <FetchError /> :
+
+                    headlines.data.map((headline) => 
+                        <Headline headline={headline} />
+                    )
+                }
             </CardBody>
         </Card>
     );

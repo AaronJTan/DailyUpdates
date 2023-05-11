@@ -3,9 +3,17 @@ import Card from "../Card/Card";
 import CardBody from "../Card/CardBody";
 import CardTitle from "../Card/CardTitle";
 import "./styles.css"
+import FetchError from "../ErrorMessages/FetchError";
 
 export default async function RedFlagDeals() {
-    const deals = await getRFDHotDeals();
+    let error = false;
+    let deals;
+    
+    try {
+        deals = await getRFDHotDeals();
+    } catch (err) {
+        error = true;
+    }
 
     const Deal = ({deal}) => {
         return (
@@ -24,11 +32,15 @@ export default async function RedFlagDeals() {
                 RedFlagDeals Hot Deals
             </CardTitle>
             <CardBody>
-                <div className="deals-grid">
-                    {deals.data.map((deal) => 
-                        <Deal deal={deal} />
-                    )}
-                </div>
+                {
+                    error ? <FetchError /> :
+                    
+                    <div className="deals-grid">
+                        {deals.data.map((deal) => 
+                            <Deal deal={deal} />
+                        )}
+                    </div>
+                }
             </CardBody>
         </Card>
     );

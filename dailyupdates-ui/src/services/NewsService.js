@@ -1,5 +1,3 @@
-import { cp24Category } from "@/components/CP24/categories";
-
 export const getMarkhamNews = async() => {
 
     const res = await fetch('http://localhost:8080/news/markham');

@@ -3,9 +3,17 @@ import CardBody from "../Card/CardBody";
 import CardTitle from "../Card/CardTitle";
 import {getTheHackerNewsArticles} from "../../services/NewsService.js"
 import "./styles.css"
+import FetchError from "../ErrorMessages/FetchError";
 
 export default async function TheHackerNews() {
-    const headlines = await getTheHackerNewsArticles();
+    let error = false;
+    let headlines;
+
+    try {
+        headlines = await getTheHackerNewsArticles();
+    } catch (err) {
+        error = true;
+    }
 
     const Headline = ({headline}) => {
         return (
@@ -23,9 +31,13 @@ export default async function TheHackerNews() {
                 The Hacker News
             </CardTitle>
             <CardBody>
-                {headlines.data.map((headline) => 
-                    <Headline headline={headline} />
-                )}
+                {
+                    error ? <FetchError /> :
+                
+                    headlines.data.map((headline) => 
+                        <Headline headline={headline} />
+                    )
+                }
             </CardBody>
         </Card>
     );

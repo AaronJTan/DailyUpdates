@@ -2,9 +2,17 @@ import Card from "../Card/Card";
 import CardBody from "../Card/CardBody";
 import CardTitle from "../Card/CardTitle";
 import {getMarkhamNews} from "../../services/NewsService.js"
+import FetchError from "../ErrorMessages/FetchError";
 
 export default async function MarkhamNews() {
-    const headlines = await getMarkhamNews();
+    let error = false;
+    let headlines;
+
+    try {
+        headlines = await getMarkhamNews();
+    } catch (err) {
+        error = true;
+    }
 
     const Headline = ({headline}) => {
         return (
@@ -22,9 +30,12 @@ export default async function MarkhamNews() {
                 Markham News
             </CardTitle>
             <CardBody>
-                {headlines.map((headline) => 
-                    <Headline headline={headline} />
-                )}
+                {
+                    error ? <FetchError /> :
+                    headlines.map((headline) => 
+                        <Headline headline={headline} />
+                    )
+                }
             </CardBody>
         </Card>
     );
