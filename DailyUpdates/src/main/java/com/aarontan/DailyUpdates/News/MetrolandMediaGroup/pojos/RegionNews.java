@@ -1,29 +1,28 @@
 package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class RegionNews {
-    private final WebDriver driver;
+    private Document doc;
 
-    public List<Article> getLatestNews(String url) {
+    public List<Article> getLatestNews(String url) throws IOException {
         navigateToNewsPage(url);
-        List<WebElement> newsElems = getLatestNewsElems();
+        Elements newsElems = getLatestNewsElems();
         List<Article> latestNews = new ArrayList<>();
 
-        for (WebElement article : newsElems) {
-            final String labelFlag = article.findElement(By.cssSelector(".card-label-flags")).getText();
-            final WebElement headlineElem = article.findElement(By.cssSelector(".tnt-headline a"));
-            final String headline = headlineElem.getText();
-            final String link = headlineElem.getAttribute("href");
-            final String lastUpdate = article.findElement(By.cssSelector("time")).getAttribute("datetime");
+        for (Element article : newsElems) {
+            final String labelFlag = article.selectFirst(".card-label-flags").text();
+            final Element headlineElem = article.selectFirst(".tnt-headline a");
+            final String headline = headlineElem.text();
+            final String link = headlineElem.absUrl("href");
+            final String lastUpdate = article.selectFirst("time").attr("datetime");
             
             latestNews.add(new Article(labelFlag, headline, lastUpdate, link));
         }
@@ -31,15 +30,13 @@ public class RegionNews {
         return latestNews;
     }
 
-    private void navigateToNewsPage(String url) {
-        driver.get(url);
+    private void navigateToNewsPage(String url) throws IOException {
+        doc = Jsoup.connect(url).get();
     }
 
-    private List<WebElement> getLatestNewsElems() {
-        List<WebElement> newsElems = driver.findElements(
-            By.cssSelector("#tncms-region-index-one-bottom .card-top-story-list article")
-        );
+    private Elements getLatestNewsElems() {
+        Elements newsElements = doc.select("#tncms-region-index-one-bottom .card-top-story-list article");
 
-        return newsElems;
+        return newsElements;
     }
 }

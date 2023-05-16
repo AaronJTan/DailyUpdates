@@ -1,9 +1,9 @@
 package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,8 @@ public class MetrolandMediaGroupController {
     private RegionNews regionalNews;
 
     @Autowired
-    public MetrolandMediaGroupController(WebDriver driver) {
-        this.regionalNews = new RegionNews(driver);
+    public MetrolandMediaGroupController() {
+        this.regionalNews = new RegionNews();
     }
 
     @GetMapping("/all-areas")
@@ -62,7 +62,7 @@ public class MetrolandMediaGroupController {
     }
 
     @GetMapping("/news/{municipality}")
-    public List<Article> getMunicipalityLatestNews(@PathVariable String municipality) {
+    public List<Article> getMunicipalityLatestNews(@PathVariable String municipality) throws IOException {
         municipality = municipality.replaceAll("\\s", "").replace("-", " ");
         String url = MunicipalityURLMap.municipalities.get(municipality);
 
