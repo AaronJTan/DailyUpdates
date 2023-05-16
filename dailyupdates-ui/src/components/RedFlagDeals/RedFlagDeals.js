@@ -15,9 +15,9 @@ export default async function RedFlagDeals() {
         error = true;
     }
 
-    const Deal = ({deal}) => {
+    const Deal = ({deal, key}) => {
         return (
-            <div className="link-item border-r" key={deal.topic_id}>
+            <div className="link-item border-r" key={key}>
                 <a href={deal.web_path} target="_blank">
                     {deal.offer.dealer_name && <span className="retailer-tag">{deal.offer.dealer_name}</span>}
                     {deal.title}
@@ -36,8 +36,8 @@ export default async function RedFlagDeals() {
                     error ? <FetchError /> :
                     
                     <div className="deals-grid">
-                        {deals.data.map((deal) => 
-                            <Deal deal={deal} />
+                        {deals.data.map((deal, index) => 
+                            <Deal deal={deal} key={index} />
                         )}
                     </div>
                 }

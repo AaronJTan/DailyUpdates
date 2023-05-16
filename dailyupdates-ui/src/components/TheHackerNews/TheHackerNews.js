@@ -15,9 +15,9 @@ export default async function TheHackerNews() {
         error = true;
     }
 
-    const Headline = ({headline}) => {
+    const Headline = ({headline, key}) => {
         return (
-            <div className="link-item">
+            <div className="link-item" key={key}>
                 <a href={headline.url} target="_blank">
                     {headline.headline}
                 </a>
@@ -34,8 +34,8 @@ export default async function TheHackerNews() {
                 {
                     error ? <FetchError /> :
                 
-                    headlines.data.map((headline) => 
-                        <Headline headline={headline} />
+                    headlines.data.map((headline, index) => 
+                        <Headline headline={headline} key={index} />
                     )
                 }
             </CardBody>

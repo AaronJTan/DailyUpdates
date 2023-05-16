@@ -14,9 +14,9 @@ export default async function MarkhamNews() {
         error = true;
     }
 
-    const Headline = ({headline}) => {
+    const Headline = ({headline, key}) => {
         return (
-            <div className="link-item">
+            <div className="link-item" key={key}>
                 <a href={headline.link} target="_blank">
                     {headline.headline}
                 </a>
@@ -32,8 +32,8 @@ export default async function MarkhamNews() {
             <CardBody>
                 {
                     error ? <FetchError /> :
-                    headlines.map((headline) => 
-                        <Headline headline={headline} />
+                    headlines.map((headline, index) => 
+                        <Headline headline={headline} key={index} />
                     )
                 }
             </CardBody>
