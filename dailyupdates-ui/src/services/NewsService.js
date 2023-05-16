@@ -1,6 +1,6 @@
 export const getMarkhamNews = async() => {
 
-    const res = await fetch('http://localhost:8080/news/markham', { cache: 'no-store' });
+    const res = await fetch('http://localhost:8080/metroland-media/news/markham', { cache: 'no-store' });
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
     
