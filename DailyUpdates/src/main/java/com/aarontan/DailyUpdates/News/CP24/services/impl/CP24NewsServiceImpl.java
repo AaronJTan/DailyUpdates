@@ -33,7 +33,6 @@ public class CP24NewsServiceImpl implements CP24NewsService {
         Elements newsArticles = doc.select(".listInnerHorizontal .linklist li .teaserTitle");
         for (Element article : newsArticles) {
             Element articleAnchorElem = article.getElementsByTag("a").first();
-            System.out.println(articleAnchorElem);
             String headline = articleAnchorElem.text();
             String url = articleAnchorElem.attr("href");
 
