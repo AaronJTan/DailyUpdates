@@ -1,6 +1,6 @@
 export const getMarkhamNews = async() => {
 
-    const res = await fetch('http://localhost:8080/metroland-media/news/markham', { cache: 'no-store' });
+    const res = await fetch(process.env.MARKHAM_NEWS, { cache: 'no-store' });
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
     
@@ -15,7 +15,7 @@ export const getMarkhamNews = async() => {
 
 export const getTheHackerNewsArticles = async() => {
 
-    const res = await fetch('http://localhost:8080/thehackernews/latest-news', { cache: 'no-store' });
+    const res = await fetch(process.env.HACKER_NEWS, { cache: 'no-store' });
 
     if (!res.ok) {
         throw new Error('Failed to fetch data');
@@ -25,7 +25,7 @@ export const getTheHackerNewsArticles = async() => {
 }
 
 export const getCP24LatestNews = async(category) => {
-    const res = await fetch(`http://localhost:8080/cp24/${category}`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.CP24}${category}`, { cache: 'no-store' });
 
     if (!res.ok) {
         throw new Error('Failed to fetch data');
