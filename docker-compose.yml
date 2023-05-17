@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  dailyupdates-ui:
+    container_name: dailyupdates-ui
+    build:
+      context: ./dailyupdates-ui
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+
+  dailyupdates-server:
+    container_name: dailyupdates-server
+    build:
+      context: ./DailyUpdates
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
