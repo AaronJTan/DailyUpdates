@@ -16,10 +16,6 @@
   }
 }
 
-body {
-  @apply bg-slate-200
-}
-
 .main-content {
   @apply mx-3 mt-16 mb-3 text-sm
 }
