@@ -1,6 +1,5 @@
 import getRFDHotDeals from "@/services/RFDService"
-import "./styles.css"
-import FetchError from "../ErrorMessages/FetchError";
+import FetchError from "./ErrorMessages/FetchError";
 import { merriweather } from "@/styles/fonts";
 
 export default async function RedFlagDeals() {
@@ -25,7 +24,11 @@ export default async function RedFlagDeals() {
                     {deals.data.map((deal, index) =>
                         <div className={`border p-0.5 hover:bg-slate-100 ${merriweather.className}`} key={index}>
                             <a href={deal.web_path} target="_blank">
-                                {deal.offer.dealer_name && <span className="retailer-tag inline-block">{deal.offer.dealer_name}</span>}
+                                {deal.offer.dealer_name &&
+                                    <span className="mr-2 border border-slate-300 bg-slate-200 rounded-md inline-block">
+                                        {deal.offer.dealer_name}
+                                    </span>
+                                }
                                 {deal.title}
                             </a>
                         </div>
