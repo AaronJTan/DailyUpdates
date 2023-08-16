@@ -1,47 +1,37 @@
 import getRFDHotDeals from "@/services/RFDService"
-import Card from "../Card/Card";
-import CardBody from "../Card/CardBody";
-import CardTitle from "../Card/CardTitle";
 import "./styles.css"
 import FetchError from "../ErrorMessages/FetchError";
+import { merriweather } from "@/styles/fonts";
 
 export default async function RedFlagDeals() {
     let error = false;
     let deals;
-    
+
     try {
         deals = await getRFDHotDeals();
     } catch (err) {
         error = true;
     }
 
-    const Deal = ({deal, key}) => {
-        return (
-            <div className="link-item border-r" key={key}>
-                <a href={deal.web_path} target="_blank">
-                    {deal.offer.dealer_name && <span className="retailer-tag">{deal.offer.dealer_name}</span>}
-                    {deal.title}
-                </a>
-            </div>
-        );
-    }
-
     return (
-        <Card className="rfd-card"> 
-            <CardTitle className="font-semibold">
-                RedFlagDeals Hot Deals
-            </CardTitle>
-            <CardBody>
-                {
-                    error ? <FetchError /> :
-                    
-                    <div className="deals-grid">
-                        {deals.data.map((deal, index) => 
-                            <Deal deal={deal} key={index} />
-                        )}
-                    </div>
-                }
-            </CardBody>
-        </Card>
-    );
+        <div className="col-span-full border-t border-[#555]">
+            <h3>RedFlagDeals Hot Deals</h3>
+
+            {error && <FetchError />}
+
+            {
+                !error &&
+                (<div className="grid gap-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {deals.data.map((deal, index) =>
+                        <div className={`border p-0.5 hover:bg-slate-100 ${merriweather.className}`} key={index}>
+                            <a href={deal.web_path} target="_blank">
+                                {deal.offer.dealer_name && <span className="retailer-tag inline-block">{deal.offer.dealer_name}</span>}
+                                {deal.title}
+                            </a>
+                        </div>
+                    )}
+                </div>)
+            }
+        </div>
+    )
 }
