@@ -1,4 +1,4 @@
-import { getTheHackerNewsArticles } from "../services/NewsService.js"
+import { newsService } from "@/services/NewsService";
 import LinkContainer from "./LinksContainer";
 
 export default async function TheHackerNews() {
@@ -6,7 +6,7 @@ export default async function TheHackerNews() {
     let headlines;
 
     try {
-        headlines = await getTheHackerNewsArticles();
+        headlines = await newsService.getTheHackerNewsArticles();
     } catch (err) {
         error = true;
     }

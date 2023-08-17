@@ -1,4 +1,4 @@
-import getRFDHotDeals from "@/services/RFDService"
+import { dealsService } from "@/services/DealsService";
 import ExternalLink from "./ExternalLink";
 import LinkContainer from "./LinksContainer";
 
@@ -7,7 +7,7 @@ export default async function RedFlagDeals() {
     let deals;
 
     try {
-        deals = await getRFDHotDeals();
+        deals = await dealsService.getRFDHotDeals();
     } catch (err) {
         error = true;
     }

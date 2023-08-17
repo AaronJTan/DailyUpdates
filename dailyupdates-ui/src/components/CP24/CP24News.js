@@ -1,7 +1,7 @@
-import { getCP24LatestNews } from "../../services/NewsService.js"
 import { cp24Category } from "./categories";
 import LinkContainer from "../LinksContainer";
 import ExternalLink from "../ExternalLink";
+import { newsService } from "@/services/NewsService";
 
 export default async function CP24News({ category }) {
     let error = false;
@@ -9,7 +9,7 @@ export default async function CP24News({ category }) {
     let headlines;
 
     try {
-        headlines = await getCP24LatestNews(category.path);
+        headlines = await newsService.getCP24LatestNews(category.path);
     } catch (err) {
         error = true;
     }

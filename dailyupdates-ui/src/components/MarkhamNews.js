@@ -1,4 +1,4 @@
-import { getMarkhamNews } from "../services/NewsService.js"
+import { newsService } from "@/services/NewsService.js";
 import ExternalLink from "./ExternalLink.js";
 import LinkContainer from "./LinksContainer.js";
 
@@ -7,7 +7,7 @@ export default async function MarkhamNews() {
     let headlines;
 
     try {
-        headlines = await getMarkhamNews();
+        headlines = await newsService.getMarkhamNews();
     } catch (err) {
         error = true;
     }
