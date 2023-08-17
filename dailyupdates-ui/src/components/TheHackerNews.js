@@ -1,5 +1,6 @@
 import { newsService } from "@/services/NewsService";
 import LinkContainer from "./LinksContainer";
+import ExternalLink from "./ExternalLink";
 
 export default async function TheHackerNews() {
     let error = false;
