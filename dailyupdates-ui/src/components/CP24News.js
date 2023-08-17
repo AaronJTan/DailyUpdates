@@ -1,7 +1,7 @@
-import { cp24Category } from "./categories";
-import LinkContainer from "../LinksContainer";
-import ExternalLink from "../ExternalLink";
+import LinkContainer from "./LinksContainer";
+import ExternalLink from "./ExternalLink";
 import { newsService } from "@/services/NewsService";
+import { cp24Category } from "@/config/cp24Categories";
 
 export default async function CP24News({ category }) {
     let error = false;

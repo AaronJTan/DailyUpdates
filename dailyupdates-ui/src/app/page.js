@@ -1,8 +1,8 @@
-import CP24News from "@/components/CP24/CP24News";
-import { cp24Category } from "@/components/CP24/categories";
+import CP24News from "@/components/CP24News";
 import MarkhamNews from "@/components/MarkhamNews";
 import RedFlagDeals from "@/components/RedFlagDeals";
 import TheHackerNews from "@/components/TheHackerNews";
+import { cp24Category } from "@/config/cp24Categories";
 
 export default function Home() {
 
