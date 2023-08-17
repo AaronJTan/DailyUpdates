@@ -32,6 +32,5 @@ public class TheHackerNewsController {
 				.setStatus(HttpStatus.OK)
 				.setData(latestNews)
 				.build();
-
     }
 }

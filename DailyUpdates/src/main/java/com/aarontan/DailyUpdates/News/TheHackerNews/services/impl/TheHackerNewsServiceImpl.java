@@ -35,7 +35,8 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
 
             String headline = articleAnchorElem.getElementsByClass("home-title").first().text();
             String url = articleAnchorElem.attr("href");
-            String tags = articleAnchorElem.getElementsByClass("h-tags").first().text();
+            Element tagsElem = articleAnchorElem.getElementsByClass("h-tags").first();
+            String tags = tagsElem != null ? tagsElem.text() : null;
             String dateTime = articleAnchorElem.getElementsByClass("h-datetime").first().ownText();
 
             articleList.add(new Article(headline, url, tags, dateTime));
@@ -44,6 +45,4 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
 
         return articleList;
     }
-    
-    
 }
