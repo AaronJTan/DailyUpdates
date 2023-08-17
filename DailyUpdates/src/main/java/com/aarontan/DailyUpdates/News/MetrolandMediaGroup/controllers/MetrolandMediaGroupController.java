@@ -23,11 +23,11 @@ import com.aarontan.DailyUpdates.utils.Util;
 @RestController
 @RequestMapping(path = "/metroland-media/")
 public class MetrolandMediaGroupController {
-    private RegionNews regionalNews;
+    private final RegionNews regionalNews;
 
     @Autowired
-    public MetrolandMediaGroupController() {
-        this.regionalNews = new RegionNews();
+    public MetrolandMediaGroupController(RegionNews regionalNews) {
+        this.regionalNews = regionalNews;
     }
 
     @GetMapping("/all-areas")

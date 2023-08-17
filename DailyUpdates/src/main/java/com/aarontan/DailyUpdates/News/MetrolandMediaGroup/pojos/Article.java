@@ -13,5 +13,5 @@ public class Article {
     private String label;
     private String headline;
     private String datetime;
-    private String link;
+    private String url;
 }
