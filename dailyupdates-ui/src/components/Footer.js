@@ -7,7 +7,7 @@ export default function Footer() {
             <div className="p-4">
                 <div className="flex flex-wrap justify-center gap-x-2 mb-2">
                     {footnoteLinks.map((data, index) => (
-                        <div>{data.name}</div>
+                        <div key={index}>{data.name}</div>
                     ))}
                 </div>
                 

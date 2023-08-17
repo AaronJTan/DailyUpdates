@@ -6,7 +6,7 @@ services:
     build:
       context: ./dailyupdates-ui
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     ports:
       - 3000:3000
 
@@ -15,6 +15,6 @@ services:
     build:
       context: ./DailyUpdates
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     ports:
       - 8080:8080
