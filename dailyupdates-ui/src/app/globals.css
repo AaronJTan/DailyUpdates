@@ -15,11 +15,3 @@
     @apply text-xl
   }
 }
-
-.main-content {
-  @apply mx-3 mt-16 mb-3 text-sm
-}
-
-.link-item {
-  @apply border-b hover:bg-slate-100
-}
