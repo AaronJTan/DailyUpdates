@@ -16,7 +16,7 @@ export default async function MarkhamNews() {
         <LinkContainer error={error} siteName="Markham News">
             {
                 headlines?.map((headline, index) =>
-                    <ExternalLink key={index} href={headline.link}>
+                    <ExternalLink key={index} href={headline.url}>
                         {headline.headline}
                     </ExternalLink>
                 )
