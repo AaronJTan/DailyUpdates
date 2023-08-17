@@ -8,11 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.aarontan.DailyUpdates.RedFlagDeals.pojos.Deal;
+import com.aarontan.DailyUpdates.RedFlagDeals.pojos.RFDError;
 import com.aarontan.DailyUpdates.RedFlagDeals.services.RedFlagDealsService;
 import com.aarontan.DailyUpdates.response.ResponseObj;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class RedFlagDealsController {
@@ -33,13 +37,13 @@ public class RedFlagDealsController {
 				.build();
     }
 
-    @ExceptionHandler({ RestClientResponseException.class })
-    public ResponseEntity<ResponseObj> handleException(RestClientResponseException e) {
-        // RFDError rfdError = e.getResponseBodyAs(RFDError.class);
-
+    @ExceptionHandler({ HttpClientErrorException.class })
+    public ResponseEntity<ResponseObj> handleException(HttpClientErrorException e) throws JsonMappingException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        RFDError rfdError = objectMapper.readValue(e.getResponseBodyAsString(), RFDError.class);
         return new ResponseObj.Builder()
-				.setStatus(HttpStatus.valueOf(e.getRawStatusCode()))
-				// .setError(e.getResponseBodyAsString())
+				.setStatus(HttpStatus.valueOf(rfdError.getStatus()))
+				.setError(rfdError.getMessage())
 				.build();
     }
 }
