@@ -7,7 +7,7 @@ import TheHackerNews from "@/components/TheHackerNews";
 export default function Home() {
 
   return (
-    <div className="text-sm container grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="container grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <div className="col-span-full ">
         <RedFlagDeals />
       </div>
