@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import './globals.css'
+import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'DailyUpdates',
@@ -16,7 +17,8 @@ export default function RootLayout({ children }) {
           </header>
 
           <main className="flex-1">{children}</main>
-
+          
+          <Footer />
         </div>
       </body>
     </html>
