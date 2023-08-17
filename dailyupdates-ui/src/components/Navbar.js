@@ -1,3 +1,4 @@
+import { appConfig } from "@/config/appConfig";
 import { merriweather } from "@/styles/fonts";
 
 export default function Navbar() {
@@ -15,10 +16,10 @@ export default function Navbar() {
                 <h1
                     className={
                         `${merriweather.className} text-center tracking-tight 
-                         font-bold col-start-2 col-span-2`
+                         font-bold col-span-full sm:col-start-2 sm:col-span-2`
                     }
                 >
-                    DAILY UPDATES
+                    {appConfig.appName.toUpperCase()}
                 </h1>
             </div>
         </div>

@@ -1,3 +1,4 @@
+import { appConfig } from "@/config/appConfig";
 import { footnoteLinks } from "@/config/footnoteLinksConfig";
 
 export default function Footer() {
@@ -11,7 +12,7 @@ export default function Footer() {
                 </div>
                 
                 <div>
-                    Copyright &copy;{new Date().getFullYear()} Daily Updates. All Rights Reserved.
+                    Copyright &copy;{new Date().getFullYear()} {appConfig.appName}. All Rights Reserved.
                 </div>
             </div>
         </div>
