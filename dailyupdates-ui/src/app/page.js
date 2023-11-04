@@ -18,10 +18,10 @@ export default function Home() {
         <CP24News category={cp24Category.LATESTNEWS} />
       </div>
       <div className="col-span-full lg:col-span-2 ">
-        <TheHackerNews />
+        <CP24News category={cp24Category.WORLDNEWS} />
       </div>
       <div className="col-span-full lg:col-span-2 ">
-        <CP24News category={cp24Category.WORLDNEWS} />
+        <TheHackerNews />
       </div>
     </div>
   )
