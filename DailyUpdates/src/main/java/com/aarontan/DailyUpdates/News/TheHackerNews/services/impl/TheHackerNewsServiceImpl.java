@@ -20,7 +20,7 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
     @Override
     public List<Article> getLatestNews()  {
         try {
-            Document doc = Jsoup.connect("https://httpstat.us/521").get();
+            Document doc = Jsoup.connect("https://thehackernews.com").get();
             Elements newsArticles = doc.select("#Blog1 .body-post");
 
             return newsArticles.stream()
