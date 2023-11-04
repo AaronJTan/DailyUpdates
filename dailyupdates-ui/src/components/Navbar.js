@@ -1,5 +1,4 @@
 import { appConfig } from "@/config/appConfig";
-import { merriweather } from "@/styles/fonts";
 
 export default function Navbar() {
     const todaysDate = new Date().toLocaleString("en-CA", {
@@ -9,17 +8,17 @@ export default function Navbar() {
     });
 
     return (
-        <div className="bg-white border-b-2">
+        <div className="bg-[#3732b3] border-b-2">
             <div className="container py-3 grid grid-cols-4 items-center">
-                <div className="hidden sm:block text-sm text-gray-700">{todaysDate}</div>
+                <div className="hidden sm:block text-md text-[#bbc6ff]">{todaysDate}</div>
 
                 <h1
-                    className={
-                        `${merriweather.className} text-center tracking-tight 
-                         font-bold col-span-full sm:col-start-2 sm:col-span-2`
-                    }
+                    className={`
+                         text-center tracking-tight 
+                         font-bold col-span-full sm:col-start-2 sm:col-span-2 text-white
+                    `}
                 >
-                    {appConfig.appName.toUpperCase()}
+                    {appConfig.appName}
                 </h1>
             </div>
         </div>
