@@ -14,7 +14,7 @@ export default async function RedFlagDeals() {
 
     return (
         <LinkContainer error={error} siteName="RedFlagDeals Hot Deals">
-            {deals && <div className="grid gap-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {deals && <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {deals?.data.map((deal, index) =>
                     <ExternalLink key={index} href={deal.url}>
                         {deal.offer.dealer_name &&
