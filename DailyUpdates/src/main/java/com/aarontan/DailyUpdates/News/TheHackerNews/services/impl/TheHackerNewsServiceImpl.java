@@ -37,7 +37,9 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
             String url = articleAnchorElem.attr("href");
             Element tagsElem = articleAnchorElem.getElementsByClass("h-tags").first();
             String tags = tagsElem != null ? tagsElem.text() : null;
-            String dateTime = articleAnchorElem.getElementsByClass("h-datetime").first().ownText();
+
+            Element dateTimeElem = articleAnchorElem.getElementsByClass("h-datetime").first();
+            String dateTime = dateTimeElem != null ? dateTimeElem.ownText() : null;
 
             articleList.add(new Article(headline, url, tags, dateTime));
 
