@@ -1,9 +1,11 @@
 package com.aarontan.DailyUpdates.News.TheHackerNews.services.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import com.aarontan.DailyUpdates.News.TheHackerNews.exceptions.HackerNewsException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,36 +17,51 @@ import com.aarontan.DailyUpdates.News.TheHackerNews.services.TheHackerNewsServic
 
 @Service
 public class TheHackerNewsServiceImpl implements TheHackerNewsService {
-
     @Override
-    public List<Article> getLatestNews() throws IOException {
-        return getArticles("https://thehackernews.com/");
+    public List<Article> getLatestNews()  {
+        try {
+            Document doc = Jsoup.connect("https://httpstat.us/521").get();
+            Elements newsArticles = doc.select("#Blog1 .body-post");
+
+            return newsArticles.stream()
+                    .map(this::buildArticle)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new HackerNewsException("An error occurred when connecting to The Hacker News");
+        }
     }
 
-    private List<Article> getArticles(String pageUrl) throws IOException {
-        List<Article> articleList = new ArrayList<>();
+    private Article buildArticle(Element article) {
+        Element articleAnchorElem = article.getElementsByTag("a").first();
 
-        Document doc = Jsoup.connect(pageUrl).get();
-        Elements newsArticles = doc.select("#Blog1 .body-post");
-        for (Element article : newsArticles) {
-            Element articleAnchorElem = article.getElementsByTag("a").first();
+        if (articleAnchorElem.attr("rel").contains("sponsored")) {
+            return null;
+        }
 
-            if (articleAnchorElem.attr("rel").contains("sponsored")) {
-                continue;
-            }
+        String headline = getHeadline(articleAnchorElem);
+        String url = getArticleUrl(articleAnchorElem);
+        String tags = getTags(articleAnchorElem);
+        String dateTime = getDate(articleAnchorElem);
 
-            String headline = articleAnchorElem.getElementsByClass("home-title").first().text();
-            String url = articleAnchorElem.attr("href");
-            Element tagsElem = articleAnchorElem.getElementsByClass("h-tags").first();
-            String tags = tagsElem != null ? tagsElem.text() : null;
+        return new Article(headline, url, tags, dateTime);
+    }
 
-            Element dateTimeElem = articleAnchorElem.getElementsByClass("h-datetime").first();
-            String dateTime = dateTimeElem != null ? dateTimeElem.ownText() : null;
+    private String getHeadline(Element articleAnchorElem) {
+        return articleAnchorElem.getElementsByClass("home-title").first().text();
+    }
 
-            articleList.add(new Article(headline, url, tags, dateTime));
+    private String getArticleUrl(Element articleAnchorElem) {
+        return articleAnchorElem.attr("href");
+    }
 
-        }    
+    private String getTags(Element articleAnchorElem) {
+        Element tagsElem = articleAnchorElem.getElementsByClass("h-tags").first();
+        return (tagsElem != null) ? tagsElem.text() : null;
+    }
 
-        return articleList;
+    private String getDate(Element articleAnchorElem) {
+        Element dateTimeElem = articleAnchorElem.getElementsByClass("h-datetime").first();
+        return (dateTimeElem != null) ? dateTimeElem.ownText() : null;
     }
 }
