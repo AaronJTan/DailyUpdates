@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.aarontan.DailyUpdates.News.TheHackerNews.exceptions.HackerNewsException;
+import com.aarontan.DailyUpdates.exceptions.ConnectException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,7 +28,7 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            throw new HackerNewsException("An error occurred when connecting to The Hacker News");
+            throw new ConnectException("An error occurred when connecting to The Hacker News");
         }
     }
 

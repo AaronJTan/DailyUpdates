@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.aarontan.DailyUpdates.exceptions.ConnectException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class RegionNews {
     private Document doc;
 
-    public List<Article> getLatestNews(String url) throws IOException {
+    public List<Article> getLatestNews(String url) {
         navigateToNewsPage(url);
         Elements newsElems = getLatestNewsElems();
 
@@ -24,8 +25,13 @@ public class RegionNews {
                 .collect(Collectors.toList());
     }
 
-    private void navigateToNewsPage(String url) throws IOException {
-        doc = Jsoup.connect(url).get();
+    private void navigateToNewsPage(String url) {
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            throw new ConnectException("An error occurred");
+        }
+
     }
 
     private Elements getLatestNewsElems() {
