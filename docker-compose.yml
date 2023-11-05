@@ -7,8 +7,6 @@ services:
       context: ./dailyupdates-ui
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - 3000:3000
 
   dailyupdates-server:
     container_name: dailyupdates-server
@@ -16,5 +14,13 @@ services:
       context: ./DailyUpdates
       dockerfile: Dockerfile
     restart: unless-stopped
+    
+  nginx:
+    image: nginx:latest
+    container_name: nginx
     ports:
-      - 8080:8080
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/proxy_directives.conf:/etc/nginx/proxy_directives.conf
+    restart: unless-stopped
