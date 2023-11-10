@@ -46,6 +46,7 @@ Option 2: Run locally using Node.js, npm and Maven
 In one terminal window:
 ```bash
 cd dailyupdates-ui
+cp .env.local.example .env.local
 npm run dev
 ```
 
