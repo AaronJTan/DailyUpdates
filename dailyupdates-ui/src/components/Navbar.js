@@ -1,6 +1,13 @@
+"use client"
+
+import { usePathname } from 'next/navigation'
 import { appConfig } from "@/config/appConfig";
+import { navigationConfig } from "@/config/navigationConfig";
+import Link from "next/link";
 
 export default function Navbar() {
+    const pathname = usePathname();
+
     const todaysDate = new Date().toLocaleString("en-CA", {
         weekday: "long",
         month: "short",
@@ -27,6 +34,20 @@ export default function Navbar() {
                     </h1>
                 </div>
             </div>
+
+            <nav className="p-2 mb-2 border-b-4 border-b-skate-200 bg-white">
+                <ul className="container flex gap-4 text-[#445a75]">
+                    {navigationConfig.map((item, index) => (
+                        <li key={index} className="font-bold">
+                            <Link href={item.path}
+                                className={`${pathname === item.path ? 'border-b-4 border-b-[#3732b3]' : ''}`}
+                            >
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
         </>
     );
 }
