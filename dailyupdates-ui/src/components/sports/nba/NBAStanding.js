@@ -16,7 +16,7 @@ export default async function NBAStanding() {
             <h2 className="font-bold">NBA</h2>
             
             <div className="flex flex-wrap sm:flex-nowrap gap-2">
-                {conferenceStandings.payload.standingGroups.map((conference) => (
+                {conferenceStandings.data.standingGroups.map((conference) => (
                     <table className="w-full text-sm table-auto border-collapse border border-slate-500 text-center">
                         <caption class="p-2 caption-top text-left bg-[#006bb6] text-white font-bold text-md">
                             {conference.conference}
