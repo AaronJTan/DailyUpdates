@@ -1,7 +1,7 @@
 export const nbaService = {
     getStandings: async () => {
         try {
-            const res = await fetch("http://localhost:8080/nba", { cache: 'no-store' });
+            const res = await fetch(process.env.NBA_STANDINGS, { cache: 'no-store' });
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data');
