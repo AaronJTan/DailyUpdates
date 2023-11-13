@@ -2,22 +2,15 @@ version: '3'
 
 services:
   dailyupdates-ui:
-    container_name: dailyupdates-ui
-    build:
-      context: ./dailyupdates-ui
-      dockerfile: Dockerfile
+    image: aaronjtan/dailyupdates-ui:latest
     restart: unless-stopped
 
   dailyupdates-server:
-    container_name: dailyupdates-server
-    build:
-      context: ./DailyUpdates
-      dockerfile: Dockerfile
+    image: aaronjtan/dailyupdates:latest
     restart: unless-stopped
     
   nginx:
     image: nginx:latest
-    container_name: nginx
     ports:
       - 80:80
       - 443:443
