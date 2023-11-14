@@ -16,8 +16,8 @@ export default async function NBAStanding() {
             <h2 className="font-bold">NBA</h2>
             
             <div className="flex flex-wrap sm:flex-nowrap gap-2">
-                {conferenceStandings.data.standingGroups.map((conference) => (
-                    <table className="w-full text-sm table-auto border-collapse border border-slate-500 text-center">
+                {conferenceStandings?.data.standingGroups.map((conference) => (
+                    <table key={conference.conference} className="w-full text-sm table-auto border-collapse border border-slate-500 text-center">
                         <caption class="p-2 caption-top text-left bg-[#006bb6] text-white font-bold text-md">
                             {conference.conference}
                         </caption>
@@ -32,9 +32,9 @@ export default async function NBAStanding() {
                         </thead>
                         <tbody>
                             {conference.teams.map((team) => (
-                                <tr className="even:bg-gray-100">
+                                <tr key={team.profile.id} className="even:bg-gray-100">
                                     <td className="border border-slate-700">{team.standings.confRank}</td>
-                                    <td className="border border-slate-700"><img width="30" height="30" src={`https://cdn.nba.com/logos/nba/${team.profile.id}/primary/L/logo.svg`} /></td>
+                                    <td className="border border-slate-700"><img width="30" height="30" src={`https://cdn.nba.com/logos/nba/${team.profile.id}/primary/L/logo.svg`} alt="team logo"/></td>
                                     <td className="border border-slate-700">{team.profile.city} {team.profile.name}</td>
                                     <td className="border border-slate-700">{team.standings.wins}</td>
                                     <td className="border border-slate-700">{team.standings.losses}</td>
