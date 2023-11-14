@@ -31,7 +31,7 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                dir('/home/ubuntu/deploy') {
+                dir('~/deploy') {
                     sh 'ansible-playbook deploy.yaml'
                 }
             }
