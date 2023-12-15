@@ -20,8 +20,8 @@ public class NewsAPIServiceImpl implements NewsAPIService {
     @Value("${NewsAPIKey}")
     private String newsAPIKey;
 
-    public NewsAPIServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.rootUri("https://newsapi.org/v2/").build();
+    public NewsAPIServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     private UriComponentsBuilder initUriComponentsBuilder() {
