@@ -1,5 +1,6 @@
 package com.aarontan.DailyUpdates.NewsAPIorg.service.impl;
 
+import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.ArticleResponse;
 import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.SourceResponse;
 import com.aarontan.DailyUpdates.NewsAPIorg.service.NewsAPIService;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +43,26 @@ public class NewsAPIServiceImpl implements NewsAPIService {
                 HttpMethod.GET,
                 httpEntity,
                 SourceResponse.class).getBody();
+    }
+
+    @Override
+    public ArticleResponse getTopHeadlines(Map<String, String> queryParams) {
+        HttpEntity<String> httpEntity = createHttpEntityWithHeaders();
+
+        UriComponentsBuilder uriComponentsBuilder = initUriComponentsBuilder()
+                .path("/top-headlines")
+                .queryParamIfPresent("country", Optional.ofNullable(queryParams.get("country")))
+                .queryParamIfPresent("category", Optional.ofNullable(queryParams.get("category")))
+                .queryParamIfPresent("sources", Optional.ofNullable(queryParams.get("sources")))
+                .queryParamIfPresent("q", Optional.ofNullable(queryParams.get("q")))
+                .queryParamIfPresent("pageSize", Optional.ofNullable(queryParams.get("pageSize")))
+                .queryParamIfPresent("page", Optional.ofNullable(queryParams.get("page")));
+
+
+        return restTemplate.exchange(uriComponentsBuilder.build().toUri(),
+                HttpMethod.GET,
+                httpEntity,
+                ArticleResponse.class).getBody();
     }
 
     private HttpEntity<String> createHttpEntityWithHeaders() {
