@@ -24,8 +24,13 @@ public class NewsAPIController {
         return newsAPIService.getTopSources(params);
     }
 
-    @GetMapping("/top-headlines/")
+    @GetMapping("/top-headlines")
     public ArticleResponse getTopHeadlines(@RequestParam Map<String, String> params) {
         return newsAPIService.getTopHeadlines(params);
+    }
+
+    @GetMapping("/everything")
+    public ArticleResponse getEverything(@RequestParam Map<String, String> params) {
+        return newsAPIService.getEverything(params);
     }
 }

@@ -8,4 +8,5 @@ import java.util.Map;
 public interface NewsAPIService {
     SourceResponse getTopSources(Map<String, String> queryParams);
     ArticleResponse getTopHeadlines(Map<String, String> queryParams);
+    ArticleResponse getEverything(Map<String, String> queryParams);
 }

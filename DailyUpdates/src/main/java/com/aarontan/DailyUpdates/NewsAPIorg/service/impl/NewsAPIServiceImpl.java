@@ -65,6 +65,31 @@ public class NewsAPIServiceImpl implements NewsAPIService {
                 ArticleResponse.class).getBody();
     }
 
+    @Override
+    public ArticleResponse getEverything(Map<String, String> queryParams) {
+        HttpEntity<String> httpEntity = createHttpEntityWithHeaders();
+
+        UriComponentsBuilder uriComponentsBuilder = initUriComponentsBuilder()
+                .path("/everything")
+                .queryParamIfPresent("q", Optional.ofNullable(queryParams.get("q")))
+                .queryParamIfPresent("searchIn", Optional.ofNullable(queryParams.get("searchIn")))
+                .queryParamIfPresent("sources", Optional.ofNullable(queryParams.get("sources")))
+                .queryParamIfPresent("domains", Optional.ofNullable(queryParams.get("domains")))
+                .queryParamIfPresent("excludeDomains", Optional.ofNullable(queryParams.get("excludeDomains")))
+                .queryParamIfPresent("from", Optional.ofNullable(queryParams.get("from")))
+                .queryParamIfPresent("to", Optional.ofNullable(queryParams.get("to")))
+                .queryParamIfPresent("language", Optional.ofNullable(queryParams.get("language")))
+                .queryParamIfPresent("sortBy", Optional.ofNullable(queryParams.get("sortBy")))
+                .queryParamIfPresent("pageSize", Optional.ofNullable(queryParams.get("pageSize")))
+                .queryParamIfPresent("page", Optional.ofNullable(queryParams.get("page")));
+
+
+        return restTemplate.exchange(uriComponentsBuilder.build().toUri(),
+                HttpMethod.GET,
+                httpEntity,
+                ArticleResponse.class).getBody();
+    }
+
     private HttpEntity<String> createHttpEntityWithHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Api-Key", newsAPIKey);
