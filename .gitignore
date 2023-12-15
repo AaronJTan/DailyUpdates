@@ -2,3 +2,5 @@ DailyUpdates.zip
 .vscode
 .idea
 .env.local
+
+docker-compose-mysql.yml
