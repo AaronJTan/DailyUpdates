@@ -3,6 +3,7 @@ package com.aarontan.DailyUpdates.NewsAPIorg.service.impl;
 import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.ArticleResponse;
 import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.SourceResponse;
 import com.aarontan.DailyUpdates.NewsAPIorg.service.NewsAPIService;
+import com.aarontan.DailyUpdates.utils.UriParamsBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -11,11 +12,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class NewsAPIServiceImpl implements NewsAPIService {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Value("${NewsAPIKey}")
     private String newsAPIKey;
@@ -34,10 +34,11 @@ public class NewsAPIServiceImpl implements NewsAPIService {
         HttpEntity<String> httpEntity = createHttpEntityWithHeaders();
 
         UriComponentsBuilder uriComponentsBuilder = initUriComponentsBuilder()
-                .path("/top-headlines/sources")
-                .queryParamIfPresent("category", Optional.ofNullable(queryParams.get("category")))
-                .queryParamIfPresent("language", Optional.ofNullable(queryParams.get("language")))
-                .queryParamIfPresent("country", Optional.ofNullable(queryParams.get("country")));
+                .path("/top-headlines/sources");
+
+        final String[] validQueryParams = new String[]{"category", "language", "country"};
+        UriParamsBuilder uriParamsBuilder = new UriParamsBuilder(uriComponentsBuilder, validQueryParams, queryParams);
+        uriComponentsBuilder = uriParamsBuilder.addValidQueryParamsToUriComponentsBuilder();
 
         return restTemplate.exchange(uriComponentsBuilder.build().toUri(),
                 HttpMethod.GET,
@@ -50,14 +51,11 @@ public class NewsAPIServiceImpl implements NewsAPIService {
         HttpEntity<String> httpEntity = createHttpEntityWithHeaders();
 
         UriComponentsBuilder uriComponentsBuilder = initUriComponentsBuilder()
-                .path("/top-headlines")
-                .queryParamIfPresent("country", Optional.ofNullable(queryParams.get("country")))
-                .queryParamIfPresent("category", Optional.ofNullable(queryParams.get("category")))
-                .queryParamIfPresent("sources", Optional.ofNullable(queryParams.get("sources")))
-                .queryParamIfPresent("q", Optional.ofNullable(queryParams.get("q")))
-                .queryParamIfPresent("pageSize", Optional.ofNullable(queryParams.get("pageSize")))
-                .queryParamIfPresent("page", Optional.ofNullable(queryParams.get("page")));
+                .path("/top-headlines");
 
+        final String[] validQueryParams = new String[]{"country", "category", "sources", "q", "pageSize", "page"};
+        UriParamsBuilder uriParamsBuilder = new UriParamsBuilder(uriComponentsBuilder, validQueryParams, queryParams);
+        uriComponentsBuilder = uriParamsBuilder.addValidQueryParamsToUriComponentsBuilder();
 
         return restTemplate.exchange(uriComponentsBuilder.build().toUri(),
                 HttpMethod.GET,
@@ -70,19 +68,12 @@ public class NewsAPIServiceImpl implements NewsAPIService {
         HttpEntity<String> httpEntity = createHttpEntityWithHeaders();
 
         UriComponentsBuilder uriComponentsBuilder = initUriComponentsBuilder()
-                .path("/everything")
-                .queryParamIfPresent("q", Optional.ofNullable(queryParams.get("q")))
-                .queryParamIfPresent("searchIn", Optional.ofNullable(queryParams.get("searchIn")))
-                .queryParamIfPresent("sources", Optional.ofNullable(queryParams.get("sources")))
-                .queryParamIfPresent("domains", Optional.ofNullable(queryParams.get("domains")))
-                .queryParamIfPresent("excludeDomains", Optional.ofNullable(queryParams.get("excludeDomains")))
-                .queryParamIfPresent("from", Optional.ofNullable(queryParams.get("from")))
-                .queryParamIfPresent("to", Optional.ofNullable(queryParams.get("to")))
-                .queryParamIfPresent("language", Optional.ofNullable(queryParams.get("language")))
-                .queryParamIfPresent("sortBy", Optional.ofNullable(queryParams.get("sortBy")))
-                .queryParamIfPresent("pageSize", Optional.ofNullable(queryParams.get("pageSize")))
-                .queryParamIfPresent("page", Optional.ofNullable(queryParams.get("page")));
+                .path("/everything");
 
+        final String[] validQueryParams = new String[]{"q", "searchIn", "sources", "domains", "excludeDomains", "from",
+                "to", "language", "sortBy", "pageSize", "page"};
+        UriParamsBuilder uriParamsBuilder = new UriParamsBuilder(uriComponentsBuilder, validQueryParams, queryParams);
+        uriComponentsBuilder = uriParamsBuilder.addValidQueryParamsToUriComponentsBuilder();
 
         return restTemplate.exchange(uriComponentsBuilder.build().toUri(),
                 HttpMethod.GET,
@@ -93,8 +84,6 @@ public class NewsAPIServiceImpl implements NewsAPIService {
     private HttpEntity<String> createHttpEntityWithHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Api-Key", newsAPIKey);
-        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-        return httpEntity;
+        return new HttpEntity<>(headers);
     }
 }
