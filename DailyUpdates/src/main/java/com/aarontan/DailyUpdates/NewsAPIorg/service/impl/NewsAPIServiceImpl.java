@@ -47,7 +47,7 @@ public class NewsAPIServiceImpl implements NewsAPIService {
     private HttpEntity<String> createHttpEntityWithHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Api-Key", newsAPIKey);
-        HttpEntity<String> httpEntity = new HttpEntity<>(null);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         return httpEntity;
     }
