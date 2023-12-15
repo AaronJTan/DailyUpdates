@@ -1,5 +1,8 @@
 package com.aarontan.DailyUpdates.NewsAPIorg.models;
 
+import lombok.Data;
+
+@Data
 public class Article {
     private Source source;
     private String author;
