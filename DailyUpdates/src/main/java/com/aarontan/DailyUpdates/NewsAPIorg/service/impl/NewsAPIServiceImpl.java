@@ -5,7 +5,6 @@ import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.SourceResponse;
 import com.aarontan.DailyUpdates.NewsAPIorg.service.NewsAPIService;
 import com.aarontan.DailyUpdates.utils.UriParamsBuilder;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

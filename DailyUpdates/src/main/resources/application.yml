@@ -19,3 +19,5 @@ spring:
 jwt:
   secret: rtjsdflsdfjlksdlksfdjlsfjldljkfsdkljfdslkjflwern34234234234jkdsf
   expirationMS: 86400000 #24 hours
+
+NewsAPIKey: 17bf912785ea43e5b3c162b68ec2b629
