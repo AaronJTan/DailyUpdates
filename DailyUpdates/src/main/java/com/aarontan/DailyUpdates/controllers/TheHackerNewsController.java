@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.TheHackerNews.controllers;
+package com.aarontan.DailyUpdates.controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aarontan.DailyUpdates.News.TheHackerNews.pojos.Article;
-import com.aarontan.DailyUpdates.News.TheHackerNews.services.TheHackerNewsService;
+import com.aarontan.DailyUpdates.pojos.news.TheHackerNews.Article;
+import com.aarontan.DailyUpdates.service.TheHackerNewsService;
 import com.aarontan.DailyUpdates.response.ResponseObj;
 
 @RestController

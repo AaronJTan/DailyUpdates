@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.TheHackerNews.services.impl;
+package com.aarontan.DailyUpdates.service.impl;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import com.aarontan.DailyUpdates.News.TheHackerNews.pojos.Article;
-import com.aarontan.DailyUpdates.News.TheHackerNews.services.TheHackerNewsService;
+import com.aarontan.DailyUpdates.pojos.news.TheHackerNews.Article;
+import com.aarontan.DailyUpdates.service.TheHackerNewsService;
 
 @Service
 public class TheHackerNewsServiceImpl implements TheHackerNewsService {

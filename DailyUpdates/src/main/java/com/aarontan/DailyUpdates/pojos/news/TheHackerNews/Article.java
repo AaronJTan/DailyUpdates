@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.TheHackerNews.pojos;
+package com.aarontan.DailyUpdates.pojos.news.TheHackerNews;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
