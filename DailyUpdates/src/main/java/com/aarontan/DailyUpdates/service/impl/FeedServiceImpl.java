@@ -47,6 +47,17 @@ public class FeedServiceImpl implements FeedService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("Feed with name: `" + feedRequest.getName() + "` already exists.");
         }
+    }
 
+    @Override
+    public void deleteFeed(long userid, int feedId) {
+        Feed feed = feedRepository.findById(feedId)
+                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
+
+        if (feed.getUserId() != userid) {
+            throw new AccessDeniedException("You are not authorized to delete this feed.");
+        }
+
+        feedRepository.delete(feed);
     }
 }
