@@ -16,10 +16,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+
+        return user;
+    }
+
+    public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with id: " + id));
 
         return user;
     }
