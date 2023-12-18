@@ -1,8 +1,8 @@
-package com.aarontan.DailyUpdates.NewsAPIorg.service.impl;
+package com.aarontan.DailyUpdates.service.impl;
 
-import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.ArticleResponse;
-import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.SourceResponse;
-import com.aarontan.DailyUpdates.NewsAPIorg.service.NewsAPIService;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.SourceResponse;
+import com.aarontan.DailyUpdates.service.NewsAPIService;
 import com.aarontan.DailyUpdates.utils.UriParamsBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

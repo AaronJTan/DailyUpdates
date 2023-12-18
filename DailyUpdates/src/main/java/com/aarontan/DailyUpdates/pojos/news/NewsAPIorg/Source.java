@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.NewsAPIorg.models;
+package com.aarontan.DailyUpdates.pojos.news.NewsAPIorg;
 
 import lombok.Data;
 

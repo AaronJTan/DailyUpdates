@@ -1,6 +1,6 @@
-package com.aarontan.DailyUpdates.NewsAPIorg.payload.responses;
+package com.aarontan.DailyUpdates.payload.response.NewsAPIorg;
 
-import com.aarontan.DailyUpdates.NewsAPIorg.models.Source;
+import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.Source;
 import lombok.Data;
 
 import java.util.List;

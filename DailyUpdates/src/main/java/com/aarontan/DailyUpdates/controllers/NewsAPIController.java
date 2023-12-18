@@ -1,8 +1,8 @@
-package com.aarontan.DailyUpdates.NewsAPIorg.controllers;
+package com.aarontan.DailyUpdates.controllers;
 
-import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.ArticleResponse;
-import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.SourceResponse;
-import com.aarontan.DailyUpdates.NewsAPIorg.service.NewsAPIService;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.SourceResponse;
+import com.aarontan.DailyUpdates.service.NewsAPIService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

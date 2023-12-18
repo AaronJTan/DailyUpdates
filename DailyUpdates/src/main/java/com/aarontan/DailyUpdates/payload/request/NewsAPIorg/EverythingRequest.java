@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.NewsAPIorg.payload.requests;
+package com.aarontan.DailyUpdates.payload.request.NewsAPIorg;
 
 import lombok.Builder;
 

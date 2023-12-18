@@ -1,7 +1,7 @@
-package com.aarontan.DailyUpdates.NewsAPIorg.service;
+package com.aarontan.DailyUpdates.service;
 
-import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.ArticleResponse;
-import com.aarontan.DailyUpdates.NewsAPIorg.payload.responses.SourceResponse;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.SourceResponse;
 
 import java.util.Map;
 
