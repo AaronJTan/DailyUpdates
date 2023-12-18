@@ -6,19 +6,19 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.aarontan.DailyUpdates.exceptions.ConnectException;
+import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import com.aarontan.DailyUpdates.pojos.news.TheHackerNews.Article;
 import com.aarontan.DailyUpdates.service.TheHackerNewsService;
 
 @Service
 public class TheHackerNewsServiceImpl implements TheHackerNewsService {
     @Override
-    public List<Article> getLatestNews()  {
+    public List<NewsArticleDetails> getLatestNews()  {
         try {
             Document doc = Jsoup.connect("https://thehackernews.com").get();
             Elements newsArticles = doc.select("#Blog1 .body-post");
@@ -32,7 +32,7 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
         }
     }
 
-    private Article buildArticle(Element article) {
+    private NewsArticleDetails buildArticle(Element article) {
         Element articleAnchorElem = article.getElementsByTag("a").first();
 
         if (articleAnchorElem.attr("rel").contains("sponsored")) {
@@ -44,7 +44,12 @@ public class TheHackerNewsServiceImpl implements TheHackerNewsService {
         String tags = getTags(articleAnchorElem);
         String dateTime = getDate(articleAnchorElem);
 
-        return new Article(headline, url, tags, dateTime);
+        return NewsArticleDetails.builder()
+                .headline(headline)
+                .url(url)
+                .tags(tags)
+                .datetime(dateTime)
+                .build();
     }
 
     private String getHeadline(Element articleAnchorElem) {

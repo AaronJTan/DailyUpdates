@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
 import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
+import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.MunicipalityURLMap;
 import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.RegionMunicipalityMap;
 import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
-import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.Article;
 import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.RegionNews;
 import com.aarontan.DailyUpdates.utils.Util;
 
@@ -65,7 +65,7 @@ public class MetrolandMediaGroupController {
     }
 
     @GetMapping("/news/{municipality}")
-    public List<Article> getMunicipalityLatestNews(@PathVariable String municipality) throws IOException {
+    public List<NewsArticleDetails> getMunicipalityLatestNews(@PathVariable String municipality) throws IOException {
         municipality = municipality.replaceAll("\\s", "").replace("-", " ");
         String url = MunicipalityURLMap.municipalities.get(municipality);
 

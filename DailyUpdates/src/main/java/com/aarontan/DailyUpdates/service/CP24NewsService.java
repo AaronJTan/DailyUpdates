@@ -2,9 +2,9 @@ package com.aarontan.DailyUpdates.service;
 
 import java.util.List;
 
-import com.aarontan.DailyUpdates.pojos.news.cp24.Article;
+import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
 
 public interface CP24NewsService {
-    public List<Article> getLatestNews();
-    public List<Article> getWorldNews();
+    public List<NewsArticleDetails> getLatestNews();
+    public List<NewsArticleDetails> getWorldNews();
 }

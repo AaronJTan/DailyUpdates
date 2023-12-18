@@ -2,8 +2,8 @@ package com.aarontan.DailyUpdates.service;
 
 import java.util.List;
 
-import com.aarontan.DailyUpdates.pojos.news.TheHackerNews.Article;
+import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
 
 public interface TheHackerNewsService {
-    public List<Article> getLatestNews();
+    public List<NewsArticleDetails> getLatestNews();
 }

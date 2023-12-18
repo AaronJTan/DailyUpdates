@@ -49,7 +49,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = { ConnectException.class })
-    public ResponseEntity<ApiResponse> handleConnectException(RuntimeException ex) {
+    public ResponseEntity<ApiResponse> handleConnectException(ConnectException ex) {
         return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.SERVICE_UNAVAILABLE)
                 .setError(ex.getMessage())
