@@ -7,6 +7,7 @@ import java.util.Map;
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
 import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
+import com.aarontan.DailyUpdates.service.MetrolandMediaGroupNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.MunicipalityURLMap;
 import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.RegionMunicipalityMap;
 import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
-import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.RegionNews;
 import com.aarontan.DailyUpdates.utils.Util;
 
 @RestController
 @RequestMapping(path = "/metroland-media/")
 public class MetrolandMediaGroupController {
-    private final RegionNews regionalNews;
+    private final MetrolandMediaGroupNewsService metrolandMediaGroupNewsService;
 
     @Autowired
-    public MetrolandMediaGroupController(RegionNews regionalNews) {
-        this.regionalNews = regionalNews;
+    public MetrolandMediaGroupController(MetrolandMediaGroupNewsService metrolandMediaGroupNewsService) {
+        this.metrolandMediaGroupNewsService = metrolandMediaGroupNewsService;
     }
 
     @GetMapping("/all-areas")
@@ -65,7 +65,7 @@ public class MetrolandMediaGroupController {
     }
 
     @GetMapping("/news/{municipality}")
-    public List<NewsArticleDetails> getMunicipalityLatestNews(@PathVariable String municipality) throws IOException {
+    public ResponseEntity<ApiResponse> getMunicipalityLatestNews(@PathVariable String municipality) {
         municipality = municipality.replaceAll("\\s", "").replace("-", " ");
         String url = MunicipalityURLMap.municipalities.get(municipality);
 
@@ -73,6 +73,11 @@ public class MetrolandMediaGroupController {
             throw new MunicipalityNotFoundException("Municipality Not Found");
         }
 
-        return regionalNews.getLatestNews(url);
+        List<NewsArticleDetails> latestNews = metrolandMediaGroupNewsService.getLatestNews(url);
+
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.OK)
+                .setData(latestNews)
+                .build();
     }
 }

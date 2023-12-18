@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup;
+package com.aarontan.DailyUpdates.service.impl;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,36 +6,33 @@ import java.util.stream.Collectors;
 
 import com.aarontan.DailyUpdates.exceptions.ConnectException;
 import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
+import com.aarontan.DailyUpdates.service.MetrolandMediaGroupNewsService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class RegionNews {
-    private Document doc;
-
+@Service
+public class MetrolandMediaGroupNewsServiceImpl implements MetrolandMediaGroupNewsService {
+    @Override
     public List<NewsArticleDetails> getLatestNews(String url) {
-        navigateToNewsPage(url);
-        Elements newsElems = getLatestNewsElems();
-
-        return newsElems.stream()
-                .map(this::mapElementToArticle)
-                .collect(Collectors.toList());
+        return getArticles(url);
     }
 
-    private void navigateToNewsPage(String url) {
+    private List<NewsArticleDetails> getArticles(String pageUrl) {
         try {
-            doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(pageUrl).get();
+            Elements newsArticles = doc.select("#tncms-region-index-one-bottom .card-top-story-list article");
+
+            return newsArticles.stream()
+                    .map(this::mapElementToArticle)
+                    .collect(Collectors.toList());
+
         } catch (IOException e) {
-            throw new ConnectException("An error occurred");
+            throw new ConnectException("An error occurred when connecting to the site.");
         }
-
-    }
-
-    private Elements getLatestNewsElems() {
-        return doc.select("#tncms-region-index-one-bottom .card-top-story-list article");
     }
 
     private NewsArticleDetails mapElementToArticle(Element article) {
