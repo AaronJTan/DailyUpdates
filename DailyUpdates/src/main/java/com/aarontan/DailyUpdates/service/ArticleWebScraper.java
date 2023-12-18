@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class ArticleWebScraper {
-    protected List<NewsArticleDetails> getArticles(String pageUrl) {
+    protected final List<NewsArticleDetails> getArticles(String pageUrl) {
         try {
             Document doc = Jsoup.connect(pageUrl).get();
             Elements newsArticles = doc.select(getNewsArticlesCSSSelectors());

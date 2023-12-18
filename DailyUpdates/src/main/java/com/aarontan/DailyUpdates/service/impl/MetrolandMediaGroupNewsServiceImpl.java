@@ -1,41 +1,27 @@
 package com.aarontan.DailyUpdates.service.impl;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.aarontan.DailyUpdates.exceptions.ConnectException;
 import com.aarontan.DailyUpdates.pojos.news.NewsArticleDetails;
+import com.aarontan.DailyUpdates.service.ArticleWebScraper;
 import com.aarontan.DailyUpdates.service.MetrolandMediaGroupNewsService;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MetrolandMediaGroupNewsServiceImpl implements MetrolandMediaGroupNewsService {
+public class MetrolandMediaGroupNewsServiceImpl extends ArticleWebScraper implements MetrolandMediaGroupNewsService {
     @Override
     public List<NewsArticleDetails> getLatestNews(String url) {
         return getArticles(url);
     }
 
-    private List<NewsArticleDetails> getArticles(String pageUrl) {
-        try {
-            Document doc = Jsoup.connect(pageUrl).get();
-            Elements newsArticles = doc.select("#tncms-region-index-one-bottom .card-top-story-list article");
-
-            return newsArticles.stream()
-                    .map(this::mapElementToArticle)
-                    .collect(Collectors.toList());
-
-        } catch (IOException e) {
-            throw new ConnectException("An error occurred when connecting to the site.");
-        }
+    @Override
+    protected String getNewsArticlesCSSSelectors() {
+        return "#tncms-region-index-one-bottom .card-top-story-list article";
     }
 
-    private NewsArticleDetails mapElementToArticle(Element article) {
+    @Override
+    protected NewsArticleDetails mapElementToArticle(Element article) {
         final String labelFlag = article.selectFirst(".card-label-flags").text();
         final Element headlineElem = article.selectFirst(".tnt-headline a");
         final String headline = headlineElem.text();
@@ -48,5 +34,10 @@ public class MetrolandMediaGroupNewsServiceImpl implements MetrolandMediaGroupNe
                 .datetime(lastUpdate)
                 .url(link)
                 .build();
+    }
+
+    @Override
+    protected String getConnectExceptionMessage() {
+        return "An error occurred when connecting to the site.";
     }
 }
