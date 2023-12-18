@@ -5,4 +5,5 @@ import com.aarontan.DailyUpdates.payload.request.FeedRequest;
 
 public interface FeedService {
     Feed createFeed(FeedRequest feedRequest, long userid);
+    Feed updateFeed(FeedRequest feedRequest, long userid, int feedId);
 }

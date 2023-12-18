@@ -2,11 +2,13 @@ package com.aarontan.DailyUpdates.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "feeds")
+@NoArgsConstructor
 @Data
 public class Feed {
     @Id
@@ -22,5 +24,9 @@ public class Feed {
     public Feed(String name, User user) {
         this.name = name;
         this.user = user;
+    }
+
+    public long getUserId() {
+        return this.user.getId();
     }
 }

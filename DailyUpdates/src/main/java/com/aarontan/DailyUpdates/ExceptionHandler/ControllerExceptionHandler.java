@@ -1,8 +1,7 @@
 package com.aarontan.DailyUpdates.ExceptionHandler;
 
 import com.aarontan.DailyUpdates.constants.ResponseMessage;
-import com.aarontan.DailyUpdates.exceptions.ConnectException;
-import com.aarontan.DailyUpdates.exceptions.UserRegistrationException;
+import com.aarontan.DailyUpdates.exceptions.*;
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
 import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-
-import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
@@ -69,6 +66,22 @@ public class ControllerExceptionHandler {
         return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.CONFLICT)
                 .setError(ex.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(DoesNotExistException.class)
+    public ResponseEntity<ApiResponse> handleDoesNotExistException(DoesNotExistException ex) {
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.BAD_REQUEST)
+                .setMessage(ex.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException ex) {
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.FORBIDDEN)
+                .setMessage(ResponseMessage.INVALID_CREDENTIALS)
                 .build();
     }
 }

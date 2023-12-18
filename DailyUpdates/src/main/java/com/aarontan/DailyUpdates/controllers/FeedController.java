@@ -21,14 +21,23 @@ public class FeedController {
     }
 
     @PostMapping("/users/{userid}/feeds")
-    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userid") long userid, @RequestBody FeedRequest feedRequest) {
-        Feed feed = feedService.createFeed(feedRequest, userid);
+    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userid") long userId, @RequestBody FeedRequest feedRequest) {
+        Feed feed = feedService.createFeed(feedRequest, userId);
 
         return new ResponseEntityBuilder()
 				.setStatus(HttpStatus.CREATED)
 				.setData(feed)
 				.build();
+    }
 
+    @PostMapping("/users/{userId}/feeds/{feedId}")
+    public ResponseEntity<ApiResponse> updateFeed(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId, @RequestBody FeedRequest feedRequest) {
+        Feed feed = feedService.updateFeed(feedRequest, userId, feedId);
+
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.CREATED)
+                .setData(feed)
+                .build();
     }
 
 }
