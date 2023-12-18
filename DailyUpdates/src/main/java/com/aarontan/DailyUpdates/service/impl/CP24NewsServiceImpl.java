@@ -1,7 +1,6 @@
-package com.aarontan.DailyUpdates.News.CP24.services.impl;
+package com.aarontan.DailyUpdates.service.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +11,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import com.aarontan.DailyUpdates.News.CP24.pojos.Article;
-import com.aarontan.DailyUpdates.News.CP24.services.CP24NewsService;
+import com.aarontan.DailyUpdates.pojos.news.cp24.Article;
+import com.aarontan.DailyUpdates.service.CP24NewsService;
 
 @Service
 public class CP24NewsServiceImpl implements CP24NewsService {

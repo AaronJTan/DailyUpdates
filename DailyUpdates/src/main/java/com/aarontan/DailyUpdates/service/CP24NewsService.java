@@ -1,9 +1,8 @@
-package com.aarontan.DailyUpdates.News.CP24.services;
+package com.aarontan.DailyUpdates.service;
 
-import java.io.IOException;
 import java.util.List;
 
-import com.aarontan.DailyUpdates.News.CP24.pojos.Article;
+import com.aarontan.DailyUpdates.pojos.news.cp24.Article;
 
 public interface CP24NewsService {
     public List<Article> getLatestNews();

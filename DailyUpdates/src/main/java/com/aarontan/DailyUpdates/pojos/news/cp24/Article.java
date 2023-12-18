@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.CP24.pojos;
+package com.aarontan.DailyUpdates.pojos.news.cp24;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
