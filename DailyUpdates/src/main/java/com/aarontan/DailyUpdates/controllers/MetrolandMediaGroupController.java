@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.controllers;
+package com.aarontan.DailyUpdates.controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.constants.MunicipalityURLMap;
-import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.constants.RegionMunicipalityMap;
-import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.exceptions.MunicipalityNotFoundException;
-import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos.Article;
-import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos.RegionNews;
+import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.MunicipalityURLMap;
+import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.RegionMunicipalityMap;
+import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
+import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.Article;
+import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.RegionNews;
 import com.aarontan.DailyUpdates.response.ResponseObj;
 import com.aarontan.DailyUpdates.utils.Util;
 

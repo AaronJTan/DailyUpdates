@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.constants;
+package com.aarontan.DailyUpdates.constants.MetrolandMediaGroup;
 
 import java.util.Map;
 import java.util.TreeMap;

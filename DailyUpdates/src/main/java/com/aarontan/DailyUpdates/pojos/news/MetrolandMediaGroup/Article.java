@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos;
+package com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

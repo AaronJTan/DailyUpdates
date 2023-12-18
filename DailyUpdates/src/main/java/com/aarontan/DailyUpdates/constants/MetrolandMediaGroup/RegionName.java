@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.constants;
+package com.aarontan.DailyUpdates.constants.MetrolandMediaGroup;
 
 public class RegionName {
     public static final String DURHAM = "Durham";

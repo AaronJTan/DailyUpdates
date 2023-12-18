@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import com.aarontan.DailyUpdates.News.MetrolandMediaGroup.exceptions.MunicipalityNotFoundException;
+import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
 import com.aarontan.DailyUpdates.response.ResponseObj;
 
 @RestControllerAdvice

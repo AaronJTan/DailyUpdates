@@ -1,7 +1,6 @@
-package com.aarontan.DailyUpdates.News.MetrolandMediaGroup.pojos;
+package com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
