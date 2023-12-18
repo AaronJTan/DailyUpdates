@@ -1,6 +1,5 @@
 package com.aarontan.DailyUpdates.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
@@ -18,7 +17,7 @@ import com.aarontan.DailyUpdates.service.TheHackerNewsService;
 @RestController
 @RequestMapping(path = "/thehackernews")
 public class TheHackerNewsController {
-    private TheHackerNewsService theHackerNewsService;
+    private final TheHackerNewsService theHackerNewsService;
 
     @Autowired
     public TheHackerNewsController(TheHackerNewsService theHackerNewsService) {
@@ -26,7 +25,7 @@ public class TheHackerNewsController {
     }
 
     @GetMapping("/latest-news")
-    public ResponseEntity<ApiResponse> getLatestNews() throws IOException {
+    public ResponseEntity<ApiResponse> getLatestNews() {
         List<NewsArticleDetails> latestNews = theHackerNewsService.getLatestNews();
 
         return new ResponseEntityBuilder()

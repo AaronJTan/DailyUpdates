@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class NBAServiceImpl implements NBAService {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public NBAServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

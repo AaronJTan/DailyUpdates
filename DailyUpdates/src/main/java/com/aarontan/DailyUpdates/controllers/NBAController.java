@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/nba")
 public class NBAController {
-    private NBAService nbaService;
+    private final NBAService nbaService;
     public NBAController(NBAService nbaService) {
         this.nbaService = nbaService;
     }

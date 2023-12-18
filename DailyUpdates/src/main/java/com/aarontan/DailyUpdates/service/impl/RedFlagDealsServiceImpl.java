@@ -12,7 +12,7 @@ import com.aarontan.DailyUpdates.service.RedFlagDealsService;
 
 @Service
 public class RedFlagDealsServiceImpl implements RedFlagDealsService {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public RedFlagDealsServiceImpl(RestTemplate restTemplate) {

@@ -17,13 +17,12 @@ import com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals.Deal;
 import com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals.RFDError;
 import com.aarontan.DailyUpdates.service.RedFlagDealsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(path = "/rfd")
 public class RedFlagDealsController {
-    private RedFlagDealsService rfdService;
+    private final RedFlagDealsService rfdService;
 
     @Autowired
     public RedFlagDealsController(RedFlagDealsService rfdService) {
@@ -41,7 +40,7 @@ public class RedFlagDealsController {
     }
 
     @ExceptionHandler({ HttpClientErrorException.class })
-    public ResponseEntity<ApiResponse> handleException(HttpClientErrorException e) throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<ApiResponse> handleException(HttpClientErrorException e) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         RFDError rfdError = objectMapper.readValue(e.getResponseBodyAsString(), RFDError.class);
         return new ResponseEntityBuilder()

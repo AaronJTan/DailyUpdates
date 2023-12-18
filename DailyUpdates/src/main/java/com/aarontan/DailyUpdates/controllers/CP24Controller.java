@@ -1,6 +1,5 @@
 package com.aarontan.DailyUpdates.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
@@ -18,7 +17,7 @@ import com.aarontan.DailyUpdates.service.CP24NewsService;
 @RestController
 @RequestMapping(path = "/cp24")
 public class CP24Controller {
-    private CP24NewsService cp24NewsService;
+    private final CP24NewsService cp24NewsService;
 
     @Autowired
     public CP24Controller(CP24NewsService cp24NewsService) {
