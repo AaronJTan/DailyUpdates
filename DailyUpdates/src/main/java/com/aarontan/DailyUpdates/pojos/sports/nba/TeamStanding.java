@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.sports.nba.pojos;
+package com.aarontan.DailyUpdates.pojos.sports.nba;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

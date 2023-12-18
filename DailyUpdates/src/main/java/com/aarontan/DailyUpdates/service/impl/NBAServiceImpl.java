@@ -1,8 +1,8 @@
-package com.aarontan.DailyUpdates.sports.nba.services.impl;
+package com.aarontan.DailyUpdates.service.impl;
 
-import com.aarontan.DailyUpdates.sports.nba.pojos.Payload;
-import com.aarontan.DailyUpdates.sports.nba.pojos.Standing;
-import com.aarontan.DailyUpdates.sports.nba.services.NBAService;
+import com.aarontan.DailyUpdates.pojos.sports.nba.Payload;
+import com.aarontan.DailyUpdates.pojos.sports.nba.Standing;
+import com.aarontan.DailyUpdates.service.NBAService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

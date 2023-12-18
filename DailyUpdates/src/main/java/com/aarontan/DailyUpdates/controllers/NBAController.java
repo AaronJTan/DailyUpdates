@@ -1,8 +1,8 @@
-package com.aarontan.DailyUpdates.sports.nba.controllers;
+package com.aarontan.DailyUpdates.controllers;
 
 import com.aarontan.DailyUpdates.response.ResponseObj;
-import com.aarontan.DailyUpdates.sports.nba.pojos.Payload;
-import com.aarontan.DailyUpdates.sports.nba.services.NBAService;
+import com.aarontan.DailyUpdates.pojos.sports.nba.Payload;
+import com.aarontan.DailyUpdates.service.NBAService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
