@@ -1,3 +1,6 @@
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
 INSERT INTO categories(name) VALUES
 ('business'), ('entertainment'), ('general'), ('health'),
 ('science'), ('sports'), ('technology');
