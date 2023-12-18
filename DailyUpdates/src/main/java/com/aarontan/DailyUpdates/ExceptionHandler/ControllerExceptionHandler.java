@@ -14,7 +14,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
-import com.aarontan.DailyUpdates.response.ResponseObj;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
@@ -35,31 +34,31 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = { MunicipalityNotFoundException.class })
-    public ResponseEntity<ResponseObj> handleConflict(RuntimeException ex) {
-        return new ResponseObj.Builder()
+    public ResponseEntity<ApiResponse> handleConflict(RuntimeException ex) {
+        return new ResponseEntityBuilder()
             .setStatus(HttpStatus.NOT_FOUND)
             .setError(ex.getMessage())
             .build();
     }
 
     @ExceptionHandler(value = { HttpServerErrorException.class })
-    public ResponseEntity<ResponseObj> handleHttpServerError(HttpServerErrorException ex) {
-        return new ResponseObj.Builder()
+    public ResponseEntity<ApiResponse> handleHttpServerError(HttpServerErrorException ex) {
+        return new ResponseEntityBuilder()
             .setStatus(ex.getStatusCode())
             .build();
     }
 
     @ExceptionHandler(value = { ConnectException.class })
-    public ResponseEntity<ResponseObj> handleConnectException(RuntimeException ex) {
-        return new ResponseObj.Builder()
+    public ResponseEntity<ApiResponse> handleConnectException(RuntimeException ex) {
+        return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.SERVICE_UNAVAILABLE)
                 .setError(ex.getMessage())
                 .build();
     }
 
     @ExceptionHandler(value = { HttpClientErrorException.class })
-    public ResponseEntity<ResponseObj> handleHttpClientErrorException(HttpClientErrorException ex) {
-        return new ResponseObj.Builder()
+    public ResponseEntity<ApiResponse> handleHttpClientErrorException(HttpClientErrorException ex) {
+        return new ResponseEntityBuilder()
                 .setStatus(ex.getStatusCode())
                 .build();
     }

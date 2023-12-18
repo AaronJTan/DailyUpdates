@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.aarontan.DailyUpdates.payload.response.ApiResponse;
+import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,6 @@ import com.aarontan.DailyUpdates.constants.MetrolandMediaGroup.RegionMunicipalit
 import com.aarontan.DailyUpdates.exceptions.MunicipalityNotFoundException;
 import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.Article;
 import com.aarontan.DailyUpdates.pojos.news.MetrolandMediaGroup.RegionNews;
-import com.aarontan.DailyUpdates.response.ResponseObj;
 import com.aarontan.DailyUpdates.utils.Util;
 
 @RestController
@@ -31,33 +32,33 @@ public class MetrolandMediaGroupController {
     }
 
     @GetMapping("/all-areas")
-    public ResponseEntity<ResponseObj> getAllAreas() {
-        return new ResponseObj.Builder()
+    public ResponseEntity<ApiResponse> getAllAreas() {
+        return new ResponseEntityBuilder()
             .setStatus(HttpStatus.OK)
             .setData(RegionMunicipalityMap.areas)
             .build();
     }
 
     @GetMapping("/regions")
-    public ResponseEntity<ResponseObj> getRegions() {
+    public ResponseEntity<ApiResponse> getRegions() {
         Map<String, String[]> regionMunicipality = RegionMunicipalityMap.areas;
         String[] regions = Util.getMapKeysAsArray(regionMunicipality);
         
-        return new ResponseObj.Builder()
+        return new ResponseEntityBuilder()
             .setStatus(HttpStatus.OK)
             .setData(regions)
             .build();
     }
 
     @GetMapping("/{region}/municipalities")
-    public ResponseEntity<ResponseObj> getRegionMunicipalities(@PathVariable String region) {
+    public ResponseEntity<ApiResponse> getRegionMunicipalities(@PathVariable String region) {
         String[] municipalities = RegionMunicipalityMap.areas.get(region);
 
         if (municipalities == null) {
             throw new MunicipalityNotFoundException("Region Not Found");
         }
 
-        return new ResponseObj.Builder()
+        return new ResponseEntityBuilder()
             .setStatus(HttpStatus.OK)
             .setData(municipalities)
             .build();

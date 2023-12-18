@@ -1,6 +1,7 @@
 package com.aarontan.DailyUpdates.controllers;
 
-import com.aarontan.DailyUpdates.response.ResponseObj;
+import com.aarontan.DailyUpdates.payload.response.ApiResponse;
+import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import com.aarontan.DailyUpdates.pojos.sports.nba.Payload;
 import com.aarontan.DailyUpdates.service.NBAService;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,10 @@ public class NBAController {
     }
 
     @GetMapping("/standings")
-    public ResponseEntity<ResponseObj> getStandings() {
+    public ResponseEntity<ApiResponse> getStandings() {
         Payload standings = nbaService.getConferenceStandings();
 
-        return new ResponseObj.Builder()
+        return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.OK)
                 .setData(standings)
                 .build();

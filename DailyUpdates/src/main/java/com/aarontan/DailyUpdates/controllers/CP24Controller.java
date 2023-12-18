@@ -3,6 +3,8 @@ package com.aarontan.DailyUpdates.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import com.aarontan.DailyUpdates.payload.response.ApiResponse;
+import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aarontan.DailyUpdates.pojos.news.cp24.Article;
 import com.aarontan.DailyUpdates.service.CP24NewsService;
-import com.aarontan.DailyUpdates.response.ResponseObj;
 
 @RestController
 @RequestMapping(path = "/cp24")
@@ -25,10 +26,10 @@ public class CP24Controller {
     }
 
     @GetMapping("/latest-news")
-    public ResponseEntity<ResponseObj> getLatestNews() throws IOException {
+    public ResponseEntity<ApiResponse> getLatestNews() throws IOException {
         List<Article> latestNews = cp24NewsService.getLatestNews();
 
-        return new ResponseObj.Builder()
+        return new ResponseEntityBuilder()
 				.setStatus(HttpStatus.OK)
 				.setData(latestNews)
 				.build();
@@ -36,10 +37,10 @@ public class CP24Controller {
     }
 
     @GetMapping("/world-news")
-    public ResponseEntity<ResponseObj> getWorldNews() throws IOException {
+    public ResponseEntity<ApiResponse> getWorldNews() throws IOException {
         List<Article> worldNews = cp24NewsService.getWorldNews();
 
-        return new ResponseObj.Builder()
+        return new ResponseEntityBuilder()
 				.setStatus(HttpStatus.OK)
 				.setData(worldNews)
 				.build();
