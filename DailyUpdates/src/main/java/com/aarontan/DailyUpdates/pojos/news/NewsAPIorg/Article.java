@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Article {
-    private Source source;
+    private ArticleSource source;
     private String author;
     private String title;
     private String description;
@@ -12,4 +12,10 @@ public class Article {
     private String urlToImage;
     private String publishedAt;
     private String content;
+}
+
+@Data
+class ArticleSource {
+    private String id;
+    private String name;
 }
