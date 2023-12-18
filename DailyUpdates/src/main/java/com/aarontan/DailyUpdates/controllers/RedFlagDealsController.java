@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.RedFlagDeals.controllers;
+package com.aarontan.DailyUpdates.controllers;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.aarontan.DailyUpdates.RedFlagDeals.pojos.Deal;
-import com.aarontan.DailyUpdates.RedFlagDeals.pojos.RFDError;
-import com.aarontan.DailyUpdates.RedFlagDeals.services.RedFlagDealsService;
+import com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals.Deal;
+import com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals.RFDError;
+import com.aarontan.DailyUpdates.service.RedFlagDealsService;
 import com.aarontan.DailyUpdates.response.ResponseObj;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

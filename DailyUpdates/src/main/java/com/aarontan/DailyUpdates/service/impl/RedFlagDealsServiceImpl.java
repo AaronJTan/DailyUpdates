@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.RedFlagDeals.services.impl;
+package com.aarontan.DailyUpdates.service.impl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.aarontan.DailyUpdates.RedFlagDeals.pojos.Deal;
-import com.aarontan.DailyUpdates.RedFlagDeals.pojos.DealList;
-import com.aarontan.DailyUpdates.RedFlagDeals.services.RedFlagDealsService;
+import com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals.Deal;
+import com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals.DealList;
+import com.aarontan.DailyUpdates.service.RedFlagDealsService;
 
 @Service
 public class RedFlagDealsServiceImpl implements RedFlagDealsService {

@@ -1,4 +1,4 @@
-package com.aarontan.DailyUpdates.RedFlagDeals.pojos;
+package com.aarontan.DailyUpdates.pojos.deals.RedFlagDeals;
 
 import java.util.List;
 
