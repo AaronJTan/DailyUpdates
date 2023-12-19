@@ -40,6 +40,26 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    public Feed addSourceToFeed(FeedSourceRequest feedSourceRequest, long userId, int feedId) {
+        try {
+            Feed feed = feedRepository.findById(feedId)
+                    .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
+
+            if (feed.getUserId() != userId) {
+                throw new AccessDeniedException("You are not authorized to edit this feed.");
+            }
+
+            TopSource source = sourceRepository.findById(feedSourceRequest.getSourceId())
+                    .orElseThrow(() -> new DoesNotExistException("Source with id: " + feedSourceRequest.getSourceId() + " does not exist."));
+
+            feed.getSources().add(source);
+            return feedRepository.save(feed);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Source with id: `" + feedSourceRequest.getSourceId() + "` already exists in feed.");
+        }
+    }
+
+    @Override
     public List<FeedRepository.FeedsOnly> getUserFeeds(long userId) {
         User user = (User) userDetailsService.loadUserById(userId);
         return feedRepository.findByUserOrderByIdDesc(user);

@@ -35,6 +35,18 @@ public class FeedController {
 				.build();
     }
 
+    @PostMapping("/users/{userid}/feeds/{feedId}/sources")
+    public ResponseEntity<ApiResponse> addSourceToFeed(@PathVariable("userid") long userId,
+                                                       @PathVariable("feedId") int feedId,
+                                                       @RequestBody FeedSourceRequest feedSourceRequest) {
+        Feed feed = feedService.addSourceToFeed(feedSourceRequest, userId, feedId);
+
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.CREATED)
+                .setData(feed)
+                .build();
+    }
+
     @GetMapping("/users/{userid}/feeds")
     public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userid") long userId) {
         List<FeedRepository.FeedsOnly> feeds = feedService.getUserFeeds(userId);

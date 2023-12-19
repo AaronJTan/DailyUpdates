@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface FeedService {
     Feed createFeed(FeedRequest feedRequest, long userid);
+    Feed addSourceToFeed(FeedSourceRequest feedSourceRequest, long userId, int feedId);
     List<FeedRepository.FeedsOnly> getUserFeeds(long userid);
     Feed getFeedSources(long userId, int feedId);
     Feed updateFeed(FeedRequest feedRequest, long userid, int feedId);
