@@ -1,9 +1,12 @@
 package com.aarontan.DailyUpdates.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "sources")
@@ -16,17 +19,24 @@ public class TopSource {
     private String description;
     private String url;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "language_id")
     private Language language;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "sources")
+    private List<Feed> feeds;
 
     private TopSource(TopSourcesBuilder builder) {
         this.id = builder.id;
@@ -38,14 +48,17 @@ public class TopSource {
         this.country = builder.country;
     }
 
+    @JsonProperty("category")
     public String getCategoryName() {
         return this.category.getName();
     }
 
+    @JsonProperty("language")
     public String getLanguageCode() {
         return this.language.getLanguageCode();
     }
 
+    @JsonProperty("country")
     public String getCountryCode() {
         return this.country.getCountryCode();
     }

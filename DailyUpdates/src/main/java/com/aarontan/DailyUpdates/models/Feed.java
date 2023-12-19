@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "feeds")
@@ -21,11 +22,20 @@ public class Feed {
     @JsonIgnore
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+            name="feed_sources",
+            joinColumns = @JoinColumn(name = "feed_id"),
+            inverseJoinColumns = @JoinColumn(name = "source_id")
+    )
+    private List<TopSource> sources;
+
     public Feed(String name, User user) {
         this.name = name;
         this.user = user;
     }
 
+    @JsonIgnore
     public long getUserId() {
         return this.user.getId();
     }
