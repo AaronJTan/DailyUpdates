@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SourceRepository extends JpaRepository<TopSource, Integer>, JpaSpecificationExecutor<TopSource> {
+public interface SourceRepository extends JpaRepository<TopSource, String>, JpaSpecificationExecutor<TopSource> {
     List<TopSource> findAll(Specification<TopSource> spec);
 }
