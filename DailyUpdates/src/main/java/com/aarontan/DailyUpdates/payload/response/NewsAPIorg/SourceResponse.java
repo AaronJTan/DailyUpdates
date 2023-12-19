@@ -1,6 +1,7 @@
 package com.aarontan.DailyUpdates.payload.response.NewsAPIorg;
 
-import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.Source;
+import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.SourceAPIModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -8,5 +9,6 @@ import java.util.List;
 @Data
 public class SourceResponse {
     private String status;
-    private List<Source> sources;
+    @JsonProperty("sources")
+    private List<SourceAPIModel> sourceAPIModels;
 }

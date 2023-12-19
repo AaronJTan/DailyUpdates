@@ -38,6 +38,18 @@ public class TopSource {
         this.country = builder.country;
     }
 
+    public String getCategoryName() {
+        return this.category.getName();
+    }
+
+    public String getLanguageCode() {
+        return this.language.getLanguageCode();
+    }
+
+    public String getCountryCode() {
+        return this.country.getCountryCode();
+    }
+
     public static class TopSourcesBuilder {
         private String id;
         private String name;
