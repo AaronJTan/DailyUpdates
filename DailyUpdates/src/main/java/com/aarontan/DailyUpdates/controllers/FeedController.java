@@ -86,4 +86,16 @@ public class FeedController {
                 .build();
     }
 
+    @DeleteMapping("/users/{userid}/feeds/{feedId}/sources")
+    public ResponseEntity<ApiResponse> deleteSourceFromFeed(@PathVariable("userid") long userId,
+               @PathVariable("feedId") int feedId,
+               @RequestBody FeedSourceRequest feedSourceRequest) {
+        Feed feed = feedService.deleteSourceFromFeed(feedSourceRequest, userId, feedId);
+
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.OK)
+                .setData(feed)
+                .build();
+    }
+
 }

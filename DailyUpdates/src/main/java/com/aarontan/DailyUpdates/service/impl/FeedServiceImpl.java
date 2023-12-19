@@ -106,4 +106,20 @@ public class FeedServiceImpl implements FeedService {
 
         feedRepository.delete(feed);
     }
+
+    @Override
+    public Feed deleteSourceFromFeed(FeedSourceRequest feedSourceRequest, long userId, int feedId) {
+        Feed feed = feedRepository.findById(feedId)
+                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
+
+        if (feed.getUserId() != userId) {
+            throw new AccessDeniedException("You are not authorized to edit this feed.");
+        }
+
+        TopSource source = sourceRepository.findById(feedSourceRequest.getSourceId())
+                .orElseThrow(() -> new DoesNotExistException("Source with id: " + feedSourceRequest.getSourceId() + " does not exist."));
+
+        feed.getSources().remove(source);
+        return feedRepository.save(feed);
+    }
 }

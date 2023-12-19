@@ -15,4 +15,5 @@ public interface FeedService {
     Feed getFeedSources(long userId, int feedId);
     Feed updateFeed(FeedRequest feedRequest, long userid, int feedId);
     void deleteFeed(long userid, int feedId);
+    Feed deleteSourceFromFeed(FeedSourceRequest feedSourceRequest, long userId, int feedId);
 }
