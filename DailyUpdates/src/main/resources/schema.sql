@@ -42,10 +42,9 @@ CREATE TABLE countries (
 );
 
 CREATE TABLE sources (
-    id int PRIMARY KEY AUTO_INCREMENT,
-    source_id varchar(50) UNIQUE NOT NULL,
+    id varchar(50) PRIMARY KEY NOT NULL,
     name varchar(50) NOT NULL,
-    description varchar(255),
+    description varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     url varchar(255) NOT NULL,
     category_id int NOT NULL,
     language_id int NOT NULL,
@@ -68,7 +67,7 @@ CREATE TABLE feeds (
 CREATE TABLE feed_sources (
     id bigint PRIMARY KEY AUTO_INCREMENT,
     feed_id bigint NOT NULL,
-    source_id int NOT NULL,
+    source_id varchar(50) NOT NULL,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT UC_FeedSource UNIQUE (feed_id,source_id),
