@@ -4,6 +4,7 @@ import com.aarontan.DailyUpdates.models.Feed;
 import com.aarontan.DailyUpdates.payload.request.FeedRequest;
 import com.aarontan.DailyUpdates.payload.request.FeedSourceRequest;
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
 import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.SourceAPIModel;
 import com.aarontan.DailyUpdates.repository.FeedRepository;
@@ -64,6 +65,16 @@ public class FeedController {
         return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.OK)
                 .setData(feed)
+                .build();
+    }
+
+    @GetMapping("/users/{userid}/feeds/{feedId}/articles")
+    public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userid") long userId, @PathVariable("feedId") int feedId) {
+        ArticleResponse feeds = feedService.getFeedArticles(userId, feedId);
+
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.OK)
+                .setData(feeds)
                 .build();
     }
 

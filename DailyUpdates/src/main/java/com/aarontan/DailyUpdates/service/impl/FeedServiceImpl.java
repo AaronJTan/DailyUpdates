@@ -7,26 +7,33 @@ import com.aarontan.DailyUpdates.models.TopSource;
 import com.aarontan.DailyUpdates.models.User;
 import com.aarontan.DailyUpdates.payload.request.FeedRequest;
 import com.aarontan.DailyUpdates.payload.request.FeedSourceRequest;
+import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
 import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.SourceAPIModel;
 import com.aarontan.DailyUpdates.repository.FeedRepository;
 import com.aarontan.DailyUpdates.repository.SourceRepository;
 import com.aarontan.DailyUpdates.security.UserDetailsServiceImpl;
 import com.aarontan.DailyUpdates.service.FeedService;
+import com.aarontan.DailyUpdates.service.NewsAPIService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FeedServiceImpl implements FeedService {
     private final FeedRepository feedRepository;
     private final SourceRepository sourceRepository;
     private final UserDetailsServiceImpl userDetailsService;
+    private final NewsAPIService newsAPIService;
 
-    public FeedServiceImpl(FeedRepository feedRepository, SourceRepository sourceRepository, UserDetailsServiceImpl userDetailsService) {
+    public FeedServiceImpl(FeedRepository feedRepository, SourceRepository sourceRepository,
+                           UserDetailsServiceImpl userDetailsService, NewsAPIService newsAPIService) {
         this.feedRepository = feedRepository;
         this.sourceRepository = sourceRepository;
         this.userDetailsService = userDetailsService;
+        this.newsAPIService = newsAPIService;
     }
 
     @Override
@@ -75,6 +82,21 @@ public class FeedServiceImpl implements FeedService {
         }
 
         return feed;
+    }
+
+    @Override
+    public ArticleResponse getFeedArticles(long userId, int feedId) {
+        Feed feed = feedRepository.findById(feedId)
+                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
+
+        if (feed.getUserId() != userId) {
+            throw new AccessDeniedException("You are not authorized to edit this feed.");
+        }
+
+        String feedSources = feedRepository.findSourceIdsByFeedId(feedId);
+        Map<String, String> params = new HashMap<>();
+        params.put("sources", feedSources);
+        return newsAPIService.getEverything(params);
     }
 
     @Override
