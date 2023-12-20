@@ -49,7 +49,8 @@ public class WebSecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeHttpRequests(auth ->
-						auth.anyRequest().permitAll()
+						auth.antMatchers("/users/**/feeds/**").authenticated()
+								.anyRequest().permitAll()
 				)
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
