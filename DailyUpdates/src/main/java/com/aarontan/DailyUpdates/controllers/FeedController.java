@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @PreAuthorize("#userId == principal.id")
 @RestController
@@ -28,7 +29,8 @@ public class FeedController {
     }
 
     @PostMapping("/users/{userId}/feeds")
-    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userId") long userId, @Valid @RequestBody FeedRequest feedRequest) {
+    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userId") long userId,
+                                                  @Valid @RequestBody FeedRequest feedRequest) {
         Feed feed = feedService.createFeed(feedRequest, userId);
 
         return new ResponseEntityBuilder()
@@ -60,7 +62,8 @@ public class FeedController {
     }
 
     @GetMapping("/users/{userId}/feeds/{feedId}/sources")
-    public ResponseEntity<ApiResponse> getFeedSources(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId) {
+    public ResponseEntity<ApiResponse> getFeedSources(@PathVariable("userId") long userId,
+                                                      @PathVariable("feedId") int feedId) {
         Feed feed = feedService.getFeedSources(userId, feedId);
 
         return new ResponseEntityBuilder()
@@ -70,8 +73,10 @@ public class FeedController {
     }
 
     @GetMapping("/users/{userId}/feeds/{feedId}/articles")
-    public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId) {
-        ArticleResponse feeds = feedService.getFeedArticles(userId, feedId);
+    public ResponseEntity<ApiResponse> getFeedArticles(@PathVariable("userId") long userId,
+                                                @PathVariable("feedId") int feedId,
+                                                @RequestParam Map<String, String> queryParams) {
+        ArticleResponse feeds = feedService.getFeedArticles(userId, feedId, queryParams);
 
         return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.OK)
@@ -80,7 +85,9 @@ public class FeedController {
     }
 
     @PutMapping("/users/{userId}/feeds/{feedId}")
-    public ResponseEntity<ApiResponse> updateFeed(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId, @Valid @RequestBody FeedRequest feedRequest) {
+    public ResponseEntity<ApiResponse> updateFeed(@PathVariable("userId") long userId,
+                                                  @PathVariable("feedId") int feedId,
+                                                  @Valid @RequestBody FeedRequest feedRequest) {
         Feed feed = feedService.updateFeed(feedRequest, userId, feedId);
 
         return new ResponseEntityBuilder()
@@ -90,7 +97,8 @@ public class FeedController {
     }
 
     @DeleteMapping("/users/{userId}/feeds/{feedId}")
-    public ResponseEntity<ApiResponse> deleteFeed(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId) {
+    public ResponseEntity<ApiResponse> deleteFeed(@PathVariable("userId") long userId,
+                                                  @PathVariable("feedId") int feedId) {
         feedService.deleteFeed(userId, feedId);
 
         return new ResponseEntityBuilder()

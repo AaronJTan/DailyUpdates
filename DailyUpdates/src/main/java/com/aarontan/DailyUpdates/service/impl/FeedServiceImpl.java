@@ -15,10 +15,12 @@ import com.aarontan.DailyUpdates.service.NewsAPIService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class FeedServiceImpl implements FeedService {
@@ -69,15 +71,16 @@ public class FeedServiceImpl implements FeedService {
         return getFeedByIdAndVerifyOwnership(feedId, userId);
     }
 
-//    handle pagination
     @Override
-    public ArticleResponse getFeedArticles(long userId, int feedId) {
+    public ArticleResponse getFeedArticles(long userId, int feedId, Map<String, String> queryParams) {
         getFeedByIdAndVerifyOwnership(feedId, userId);
-
         String feedSources = feedRepository.findSourceIdsByFeedId(feedId);
-        Map<String, String> params = new HashMap<>();
-        params.put("sources", feedSources);
-        return newsAPIService.getEverything(params);
+
+        Set<String> keysToRetain = Set.of("sortBy", "pageSize", "page");
+        queryParams.keySet().retainAll(keysToRetain);
+        queryParams.put("sources", feedSources);
+
+        return newsAPIService.getEverything(queryParams);
     }
 
     @Override
