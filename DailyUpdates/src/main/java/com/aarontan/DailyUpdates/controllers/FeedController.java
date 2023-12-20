@@ -27,8 +27,8 @@ public class FeedController {
         this.feedService = feedService;
     }
 
-    @PostMapping("/users/{userid}/feeds")
-    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userid") long userId, @Valid @RequestBody FeedRequest feedRequest) {
+    @PostMapping("/users/{userId}/feeds")
+    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userId") long userId, @Valid @RequestBody FeedRequest feedRequest) {
         Feed feed = feedService.createFeed(feedRequest, userId);
 
         return new ResponseEntityBuilder()
@@ -37,8 +37,8 @@ public class FeedController {
 				.build();
     }
 
-    @PostMapping("/users/{userid}/feeds/{feedId}/sources")
-    public ResponseEntity<ApiResponse> addSourceToFeed(@PathVariable("userid") long userId,
+    @PostMapping("/users/{userId}/feeds/{feedId}/sources")
+    public ResponseEntity<ApiResponse> addSourceToFeed(@PathVariable("userId") long userId,
                                                        @PathVariable("feedId") int feedId,
                                                        @Valid @RequestBody FeedSourceRequest feedSourceRequest) {
         Feed feed = feedService.addSourceToFeed(feedSourceRequest, userId, feedId);
@@ -49,8 +49,8 @@ public class FeedController {
                 .build();
     }
 
-    @GetMapping("/users/{userid}/feeds")
-    public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userid") long userId) {
+    @GetMapping("/users/{userId}/feeds")
+    public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userId") long userId) {
         List<FeedRepository.FeedsOnly> feeds = feedService.getUserFeeds(userId);
 
         return new ResponseEntityBuilder()
@@ -59,8 +59,8 @@ public class FeedController {
                 .build();
     }
 
-    @GetMapping("/users/{userid}/feeds/{feedId}/sources")
-    public ResponseEntity<ApiResponse> getFeedSources(@PathVariable("userid") long userId, @PathVariable("feedId") int feedId) {
+    @GetMapping("/users/{userId}/feeds/{feedId}/sources")
+    public ResponseEntity<ApiResponse> getFeedSources(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId) {
         Feed feed = feedService.getFeedSources(userId, feedId);
 
         return new ResponseEntityBuilder()
@@ -69,8 +69,8 @@ public class FeedController {
                 .build();
     }
 
-    @GetMapping("/users/{userid}/feeds/{feedId}/articles")
-    public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userid") long userId, @PathVariable("feedId") int feedId) {
+    @GetMapping("/users/{userId}/feeds/{feedId}/articles")
+    public ResponseEntity<ApiResponse> getFeeds(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId) {
         ArticleResponse feeds = feedService.getFeedArticles(userId, feedId);
 
         return new ResponseEntityBuilder()
@@ -98,8 +98,8 @@ public class FeedController {
                 .build();
     }
 
-    @DeleteMapping("/users/{userid}/feeds/{feedId}/sources")
-    public ResponseEntity<ApiResponse> deleteSourceFromFeed(@PathVariable("userid") long userId,
+    @DeleteMapping("/users/{userId}/feeds/{feedId}/sources")
+    public ResponseEntity<ApiResponse> deleteSourceFromFeed(@PathVariable("userId") long userId,
                @PathVariable("feedId") int feedId,
                @Valid @RequestBody FeedSourceRequest feedSourceRequest) {
         Feed feed = feedService.deleteSourceFromFeed(feedSourceRequest, userId, feedId);
