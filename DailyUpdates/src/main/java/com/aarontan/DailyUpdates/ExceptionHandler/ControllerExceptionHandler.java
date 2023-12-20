@@ -7,11 +7,17 @@ import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
@@ -77,11 +83,35 @@ public class ControllerExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException ex) {
+    @ExceptionHandler({AccessDeniedException.class, org.springframework.security.access.AccessDeniedException.class})
+    public ResponseEntity<ApiResponse> handleAccessDeniedException(Exception ex) {
         return new ResponseEntityBuilder()
                 .setStatus(HttpStatus.FORBIDDEN)
-                .setMessage(ResponseMessage.INVALID_CREDENTIALS)
+                .setMessage("You are not authorized to access this resource.")
                 .build();
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.BAD_REQUEST)
+                .setError("Invalid request body.")
+                .build();
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        return new ResponseEntityBuilder()
+                .setStatus(HttpStatus.BAD_REQUEST)
+                .setError(errors)
+                .build();
+    }
+
 }

@@ -6,16 +6,18 @@ import com.aarontan.DailyUpdates.payload.request.FeedSourceRequest;
 import com.aarontan.DailyUpdates.payload.response.ApiResponse;
 import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
 import com.aarontan.DailyUpdates.payload.response.ResponseEntityBuilder;
-import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.SourceAPIModel;
 import com.aarontan.DailyUpdates.repository.FeedRepository;
 import com.aarontan.DailyUpdates.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@PreAuthorize("#userId == principal.id")
 @RestController
 public class FeedController {
     private final FeedService feedService;
@@ -26,7 +28,7 @@ public class FeedController {
     }
 
     @PostMapping("/users/{userid}/feeds")
-    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userid") long userId, @RequestBody FeedRequest feedRequest) {
+    public ResponseEntity<ApiResponse> createFeed(@PathVariable("userid") long userId, @Valid @RequestBody FeedRequest feedRequest) {
         Feed feed = feedService.createFeed(feedRequest, userId);
 
         return new ResponseEntityBuilder()
@@ -38,7 +40,7 @@ public class FeedController {
     @PostMapping("/users/{userid}/feeds/{feedId}/sources")
     public ResponseEntity<ApiResponse> addSourceToFeed(@PathVariable("userid") long userId,
                                                        @PathVariable("feedId") int feedId,
-                                                       @RequestBody FeedSourceRequest feedSourceRequest) {
+                                                       @Valid @RequestBody FeedSourceRequest feedSourceRequest) {
         Feed feed = feedService.addSourceToFeed(feedSourceRequest, userId, feedId);
 
         return new ResponseEntityBuilder()
@@ -78,7 +80,7 @@ public class FeedController {
     }
 
     @PutMapping("/users/{userId}/feeds/{feedId}")
-    public ResponseEntity<ApiResponse> updateFeed(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId, @RequestBody FeedRequest feedRequest) {
+    public ResponseEntity<ApiResponse> updateFeed(@PathVariable("userId") long userId, @PathVariable("feedId") int feedId, @Valid @RequestBody FeedRequest feedRequest) {
         Feed feed = feedService.updateFeed(feedRequest, userId, feedId);
 
         return new ResponseEntityBuilder()
@@ -99,7 +101,7 @@ public class FeedController {
     @DeleteMapping("/users/{userid}/feeds/{feedId}/sources")
     public ResponseEntity<ApiResponse> deleteSourceFromFeed(@PathVariable("userid") long userId,
                @PathVariable("feedId") int feedId,
-               @RequestBody FeedSourceRequest feedSourceRequest) {
+               @Valid @RequestBody FeedSourceRequest feedSourceRequest) {
         Feed feed = feedService.deleteSourceFromFeed(feedSourceRequest, userId, feedId);
 
         return new ResponseEntityBuilder()
