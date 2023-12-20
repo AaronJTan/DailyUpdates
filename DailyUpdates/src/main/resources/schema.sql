@@ -56,7 +56,7 @@ CREATE TABLE sources (
 
 CREATE TABLE feeds (
     id bigint PRIMARY KEY AUTO_INCREMENT,
-    name varchar(50) NOT NULL,
+    name varchar(50) NOT NULL CHECK (TRIM(name) != ''),
     user_id bigint NOT NULL,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

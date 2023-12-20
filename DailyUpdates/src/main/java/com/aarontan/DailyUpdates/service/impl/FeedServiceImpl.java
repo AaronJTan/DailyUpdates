@@ -1,6 +1,5 @@
 package com.aarontan.DailyUpdates.service.impl;
 
-import com.aarontan.DailyUpdates.exceptions.AccessDeniedException;
 import com.aarontan.DailyUpdates.exceptions.DoesNotExistException;
 import com.aarontan.DailyUpdates.models.Feed;
 import com.aarontan.DailyUpdates.models.TopSource;
@@ -8,13 +7,13 @@ import com.aarontan.DailyUpdates.models.User;
 import com.aarontan.DailyUpdates.payload.request.FeedRequest;
 import com.aarontan.DailyUpdates.payload.request.FeedSourceRequest;
 import com.aarontan.DailyUpdates.payload.response.NewsAPIorg.ArticleResponse;
-import com.aarontan.DailyUpdates.pojos.news.NewsAPIorg.SourceAPIModel;
 import com.aarontan.DailyUpdates.repository.FeedRepository;
 import com.aarontan.DailyUpdates.repository.SourceRepository;
 import com.aarontan.DailyUpdates.security.UserDetailsServiceImpl;
 import com.aarontan.DailyUpdates.service.FeedService;
 import com.aarontan.DailyUpdates.service.NewsAPIService;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -37,32 +36,25 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public Feed createFeed(FeedRequest feedRequest, long userid) {
+    public Feed createFeed(FeedRequest feedRequest, long userId) {
         try {
-            User user = (User) userDetailsService.loadUserById(userid);
+            User user = (User) userDetailsService.loadUserById(userId);
             return feedRepository.save(new Feed(feedRequest.getName(), user));
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Feed with name: `" + feedRequest.getName() + "` already exists.");
+            throw new DataIntegrityViolationException(String.format("Feed with name: `%s` already exists.", feedRequest.getName()));
         }
     }
 
     @Override
     public Feed addSourceToFeed(FeedSourceRequest feedSourceRequest, long userId, int feedId) {
         try {
-            Feed feed = feedRepository.findById(feedId)
-                    .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
-
-            if (feed.getUserId() != userId) {
-                throw new AccessDeniedException("You are not authorized to edit this feed.");
-            }
-
-            TopSource source = sourceRepository.findById(feedSourceRequest.getSourceId())
-                    .orElseThrow(() -> new DoesNotExistException("Source with id: " + feedSourceRequest.getSourceId() + " does not exist."));
+            Feed feed = getFeedByIdAndVerifyOwnership(feedId, userId);
+            TopSource source = getSourceById(feedSourceRequest.getSourceId());
 
             feed.getSources().add(source);
             return feedRepository.save(feed);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Source with id: `" + feedSourceRequest.getSourceId() + "` already exists in feed.");
+            throw new DataIntegrityViolationException(String.format("Source with id: `%s` already exists in feed.", feedSourceRequest.getSourceId()));
         }
     }
 
@@ -74,24 +66,13 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public Feed getFeedSources(long userId, int feedId) {
-        Feed feed = feedRepository.findById(feedId)
-                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
-
-        if (feed.getUserId() != userId) {
-            throw new AccessDeniedException("You are not authorized to edit this feed.");
-        }
-
-        return feed;
+        return getFeedByIdAndVerifyOwnership(feedId, userId);
     }
 
+//    handle pagination
     @Override
     public ArticleResponse getFeedArticles(long userId, int feedId) {
-        Feed feed = feedRepository.findById(feedId)
-                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
-
-        if (feed.getUserId() != userId) {
-            throw new AccessDeniedException("You are not authorized to edit this feed.");
-        }
+        getFeedByIdAndVerifyOwnership(feedId, userId);
 
         String feedSources = feedRepository.findSourceIdsByFeedId(feedId);
         Map<String, String> params = new HashMap<>();
@@ -100,14 +81,8 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public Feed updateFeed(FeedRequest feedRequest, long userid, int feedId) {
-        Feed feed = feedRepository.findById(feedId)
-                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
-
-        if (feed.getUserId() != userid) {
-            throw new AccessDeniedException("You are not authorized to edit this feed.");
-        }
-
+    public Feed updateFeed(FeedRequest feedRequest, long userId, int feedId) {
+        Feed feed = getFeedByIdAndVerifyOwnership(feedId, userId);
         feed.setName(feedRequest.getName());
 
         try {
@@ -118,30 +93,41 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public void deleteFeed(long userid, int feedId) {
-        Feed feed = feedRepository.findById(feedId)
-                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
-
-        if (feed.getUserId() != userid) {
-            throw new AccessDeniedException("You are not authorized to delete this feed.");
-        }
-
+    public void deleteFeed(long userId, int feedId) {
+        Feed feed = getFeedByIdAndVerifyOwnership(feedId, userId);
         feedRepository.delete(feed);
     }
 
     @Override
     public Feed deleteSourceFromFeed(FeedSourceRequest feedSourceRequest, long userId, int feedId) {
-        Feed feed = feedRepository.findById(feedId)
-                .orElseThrow(() -> new DoesNotExistException("Feed with id: " + feedId + " does not exist."));
+        Feed feed = getFeedByIdAndVerifyOwnership(feedId, userId);
+        String sourceId = feedSourceRequest.getSourceId();
+        TopSource source = getSourceById(sourceId);
 
-        if (feed.getUserId() != userId) {
-            throw new AccessDeniedException("You are not authorized to edit this feed.");
+        if (!feed.getSources().remove(source)) {
+            throw new DoesNotExistException(String.format("Source with id: `%s` does not exist in feed.", sourceId));
         }
 
-        TopSource source = sourceRepository.findById(feedSourceRequest.getSourceId())
-                .orElseThrow(() -> new DoesNotExistException("Source with id: " + feedSourceRequest.getSourceId() + " does not exist."));
-
-        feed.getSources().remove(source);
         return feedRepository.save(feed);
+    }
+
+    private Feed getFeedByIdAndVerifyOwnership(int feedId, long userId) {
+        Feed feed = feedRepository.findById(feedId)
+                .orElseThrow(() -> new DoesNotExistException(String.format("Feed with id: `%d` does not exist.", feedId)));
+
+        verifyOwnership(feed, userId);
+
+        return feed;
+    }
+
+    private void verifyOwnership(Feed feed, long userId) {
+        if (feed.getUserId() != userId) {
+            throw new AccessDeniedException("You are not authorized to access this feed.");
+        }
+    }
+
+    private TopSource getSourceById(String sourceId) {
+        return sourceRepository.findById(sourceId)
+                .orElseThrow(() -> new DoesNotExistException(String.format("Source with id: `%s` does not exist.", sourceId)));
     }
 }
