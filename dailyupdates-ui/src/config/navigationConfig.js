@@ -4,7 +4,15 @@ export const navigationConfig = [
         path: "/"
     },
     {
-        name: "Sports",
+        name: "Other News",
+        path: "/other-news"
+    },
+    {
+        name: "RedFlagDeals",
+        path: "/redflagdeals"
+    },
+    {
+        name: "NBA Standings",
         path: "/sports"
     },
 ]

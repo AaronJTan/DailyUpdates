@@ -26,7 +26,9 @@ export default function Navbar() {
                 <div className="border-b-2">
                     <div className='container p-3 flex items-center justify-between'>
                         <GiHamburgerMenu className="w-6 h-6" />
-                        <h1 className={`${fellFrench.className} tracking-tight`}>{appConfig.appName}</h1>
+                        <Link href="/">
+                            <h1 className={`${fellFrench.className} tracking-tight`}>{appConfig.appName}</h1>
+                        </Link>
                         <IoSearch className="w-6 h-6" />
                     </div>
                 </div>
@@ -42,7 +44,9 @@ export default function Navbar() {
                 <div className="border-b-2">
                     <div className='container py-10 grid grid-cols-12 items-center justify-between'>
                         <div className="text-sm col-span-3">{todaysDate}</div>
-                        <h1 className={`${fellFrench.className} col-span-6 tracking-tight text-center lg:text-4xl xl:text-6xl`}>{appConfig.appName}</h1>
+                        <Link href="/" className="col-span-6">
+                            <h1 className={`${fellFrench.className} tracking-tight text-center lg:text-4xl xl:text-6xl`}>{appConfig.appName}</h1>
+                        </Link>
                         <div className="col-span-3 gap-x-2 justify-end flex">
                             <IoSearch className="w-6 h-6" />
                         </div>
