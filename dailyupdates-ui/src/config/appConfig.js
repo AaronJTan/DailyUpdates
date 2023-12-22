@@ -1,3 +1,3 @@
 export const appConfig = {
-    appName: "Daily Updates"
+    appName: "The Daily Updates"
 }
