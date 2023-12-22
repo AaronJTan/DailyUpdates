@@ -8,9 +8,31 @@ import { fellFrench } from "@/styles/fonts";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearch } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+import { useState } from 'react';
+
+function HambugerMenu({ navbarOpen, setNavBarOpen }) {
+    return (
+        <nav className={`${navbarOpen ? "block" : "hidden"} w-screen h-screen fixed top-0 left-0 bg-[#161617] text-[#e8e8ed] p-4 text-xl`}>
+            <div className='bg-red-200'>
+                <IoMdClose className="w-7 h-7 float-right" onClick={() => setNavBarOpen(false)} />
+            </div>
+            <ul className="container flex flex-col gap-4">
+                {navigationConfig.map((item, index) => (
+                    <li key={index} className="font-bold">
+                        <Link href={item.path} onClick={() => setNavBarOpen(!navbarOpen)}>
+                            {item.name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
+}
 
 export default function Navbar() {
     const pathname = usePathname();
+    const [navbarOpen, setNavBarOpen] = useState(false);
 
     const todaysDate = new Date().toLocaleString("en-CA", {
         weekday: "long",
@@ -25,7 +47,7 @@ export default function Navbar() {
             <div className="lg:hidden">
                 <div className="border-b-2">
                     <div className='container p-3 flex items-center justify-between'>
-                        <GiHamburgerMenu className="w-6 h-6" />
+                        <GiHamburgerMenu className="w-6 h-6" onClick={() => setNavBarOpen(!navbarOpen)} />
                         <Link href="/">
                             <h1 className={`${fellFrench.className} tracking-tight`}>{appConfig.appName}</h1>
                         </Link>
@@ -37,7 +59,9 @@ export default function Navbar() {
                         <div className="py-1 text-xs">{todaysDate}</div>
                     </div>
                 </div>
+                <HambugerMenu navbarOpen={navbarOpen} setNavBarOpen={setNavBarOpen} />
             </div>
+
 
 
             <div className="hidden lg:block">
