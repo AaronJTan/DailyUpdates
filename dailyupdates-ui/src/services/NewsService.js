@@ -39,6 +39,26 @@ export const newsService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getTopHeadlinesByCategory: async (category, page) => {
+        try {
+            const url = new URL("http://localhost:8080/api/newsapi/top-headlines");
+            url.searchParams.append("country", "ca");
+            url.searchParams.append("category", category);
+            url.searchParams.append("pageSize", 20);
+            url.searchParams.append("page", Number(page) > 0 ? Number(page) : 1);
+
+            const res = await fetch(url);
+
+            if (!res.ok) {
+                throw new Error('Failed to fetch data');
+            }
+
+            return res.json();
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

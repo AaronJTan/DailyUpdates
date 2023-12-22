@@ -4,6 +4,30 @@ export const navigationConfig = [
         path: "/"
     },
     {
+        name: "Business",
+        path: "/business"
+    },
+    {
+        name: "Entertainment",
+        path: "/entertainment"
+    },
+    {
+        name: "Health",
+        path: "/health"
+    },
+    {
+        name: "Science",
+        path: "/science"
+    },
+    {
+        name: "Sports",
+        path: "/sports"
+    },
+    {
+        name: "Technology",
+        path: "/technology"
+    },
+    {
         name: "Other News",
         path: "/other-news"
     },
@@ -13,6 +37,6 @@ export const navigationConfig = [
     },
     {
         name: "NBA Standings",
-        path: "/sports"
+        path: "/nba-standings"
     },
 ]
