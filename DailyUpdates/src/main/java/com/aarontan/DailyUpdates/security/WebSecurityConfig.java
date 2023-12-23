@@ -46,7 +46,7 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http.csrf().disable()
+		return http.cors().and().csrf().disable()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
@@ -61,12 +61,10 @@ public class WebSecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		// configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedHeaders(Arrays.asList("*"));
-		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost"));
-//        configuration.setAllowCredentials(true);
-		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "PATH", "DELETE"));
+        configuration.setAllowCredentials(true);
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "PATCH", "DELETE"));
+		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
