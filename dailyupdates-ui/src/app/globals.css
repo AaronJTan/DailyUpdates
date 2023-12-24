@@ -14,6 +14,10 @@
   h3 {
     @apply text-xl
   }
+
+  label {
+    @apply block
+  }
 }
 
 @layer components {
@@ -34,6 +38,6 @@
   }
 
   input {
-    @apply border border-[#a1a1aa] h-11 px-3
+    @apply border border-[#a1a1aa] h-11 px-3 w-full
   }
 }
