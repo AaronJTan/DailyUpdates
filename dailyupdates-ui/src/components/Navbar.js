@@ -48,7 +48,7 @@ export default function Navbar() {
                 <div className="border-b-2">
                     <div className='container p-3 flex items-center justify-between'>
                         <GiHamburgerMenu className="w-6 h-6" onClick={() => setNavBarOpen(!navbarOpen)} />
-                        <Link href="/">
+                        <Link href="/" prefetch={false}>
                             <h1 className={`${fellFrench.className} tracking-tight`}>{appConfig.appName}</h1>
                         </Link>
                         <IoSearch className="w-6 h-6" />
@@ -68,7 +68,7 @@ export default function Navbar() {
                 <div className="border-b-2">
                     <div className='container py-10 grid grid-cols-12 items-center justify-between'>
                         <div className="text-sm col-span-3">{todaysDate}</div>
-                        <Link href="/" className="col-span-6">
+                        <Link href="/" className="col-span-6" prefetch={false}>
                             <h1 className={`${fellFrench.className} tracking-tight text-center lg:text-4xl xl:text-6xl`}>{appConfig.appName}</h1>
                         </Link>
                         <div className="col-span-3 gap-x-2 justify-end flex">
@@ -80,7 +80,7 @@ export default function Navbar() {
                     <ul className="container flex gap-4">
                         {navigationConfig.map((item, index) => (
                             <li key={index} className="font-bold">
-                                <Link href={item.path}
+                                <Link href={item.path} prefetch={false}
                                     className={`${pathname === item.path ? 'border-b-4 border-b-[#3732b3]' : ''}`}
                                 >
                                     {item.name}

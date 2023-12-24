@@ -1,9 +1,9 @@
-
 export default function Home() {
 
   return (
     <div className="container">
-        Page under development...
+      Page under development...
+
     </div>
   )
 }

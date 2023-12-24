@@ -49,7 +49,7 @@ export const newsService = {
             url.searchParams.append("pageSize", 20);
             url.searchParams.append("page", Number(page) > 0 ? Number(page) : 1);
 
-            const res = await fetch(url);
+            const res = await fetch(url, {cache: 'force-cache', next: {revalidate: false}});
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data');

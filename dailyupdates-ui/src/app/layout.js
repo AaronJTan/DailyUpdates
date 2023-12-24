@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar'
 import './globals.css'
 import Footer from '@/components/Footer'
 import { workSans } from "@/styles/fonts";
@@ -13,12 +12,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className={`flex flex-col min-h-screen ${workSans.className}`}>
-          <header>
+
+          {children}
+          {/* <header>
             <Navbar />
           </header>
 
-          <main className="flex-1">{children}</main>
-          
+          <main className="flex-1">{children}</main> */}
+
           <Footer />
         </div>
       </body>

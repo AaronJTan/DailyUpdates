@@ -18,7 +18,7 @@ export default async function NBAStanding() {
             <div className="flex flex-wrap sm:flex-nowrap gap-2">
                 {conferenceStandings?.data.standingGroups.map((conference) => (
                     <table key={conference.conference} className="w-full text-sm table-auto border-collapse border border-slate-500 text-center">
-                        <caption class="p-2 caption-top text-left bg-[#006bb6] text-white font-bold text-md">
+                        <caption className="p-2 caption-top text-left bg-[#006bb6] text-white font-bold text-md">
                             {conference.conference}
                         </caption>
                         <thead>

@@ -15,3 +15,25 @@
     @apply text-xl
   }
 }
+
+@layer components {
+  button {
+    @apply  w-full h-11 px-3 font-medium
+  }
+
+  .btn-link {
+    @apply block w-full h-11 font-medium flex justify-center items-center
+  }
+
+  .btn-primary {
+    @apply bg-[#0274b6] text-white hover:bg-[#015483]
+  }
+
+  .btn-secondary {
+    @apply border border-[#a1a1aa] hover:bg-[#fafafa]
+  }
+
+  input {
+    @apply border border-[#a1a1aa] h-11 px-3
+  }
+}
