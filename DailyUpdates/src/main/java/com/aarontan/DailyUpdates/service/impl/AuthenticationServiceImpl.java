@@ -70,7 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String authenticateUser(LoginRequest loginRequest) {
-        String usernameOrEmail = loginRequest.getUsernameOrEmail();
+        String usernameOrEmail = loginRequest.getUsername();
         String username = !EmailValidator.isValidEmail(usernameOrEmail) ?
                 usernameOrEmail : userRepository.findUsernameByEmail(usernameOrEmail);
 
