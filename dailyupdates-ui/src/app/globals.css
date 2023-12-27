@@ -21,7 +21,7 @@
 }
 
 @layer components {
-  button {
+  .form-btn {
     @apply  w-full h-11 px-3 font-medium
   }
 

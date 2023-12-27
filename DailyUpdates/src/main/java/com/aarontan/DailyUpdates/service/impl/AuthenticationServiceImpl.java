@@ -69,7 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String authenticateUser(LoginRequest loginRequest) {
+    public User authenticateUser(LoginRequest loginRequest) {
         String usernameOrEmail = loginRequest.getUsername();
         String username = !EmailValidator.isValidEmail(usernameOrEmail) ?
                 usernameOrEmail : userRepository.findUsernameByEmail(usernameOrEmail);
@@ -82,8 +82,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
 
         User user = (User) authentication.getPrincipal();
-
-        return jwtService.generateJwtToken(user);
+        System.out.println(user);
+        return user;
     }
 
     @Override

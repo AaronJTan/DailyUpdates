@@ -1,6 +1,7 @@
 "use client"
 
 import ErrorText from "@/components/ErrorText";
+import { useAuth } from "@/hooks/authContext";
 import { useFormFields } from "@/hooks/useFormFields";
 import AuthService from "@/services/AuthService";
 import { handleInputErrorClass } from "@/utils/cssUtils";
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignInPage() {
+    const {loginUser} = useAuth();
 
     const router = useRouter();
     const [formData, handleChange] = useFormFields({
@@ -30,9 +32,7 @@ export default function SignInPage() {
         setErrors({});
 
         try {
-            const res = await AuthService.signin(formData);
-            localStorage.setItem("loggedIn", true);
-            router.push("/");
+            await loginUser(formData);
         } catch (error) {
             if (error.httpStatus == 401) {
                 setErrors({ invalidCredentials: true })
@@ -77,7 +77,7 @@ export default function SignInPage() {
                 </div>
 
 
-                <button type="submit" className="link-cursor btn-primary">Sign In</button>
+                <button type="submit" className="link-cursor form-btn btn-primary">Sign In</button>
                 {errors.invalidCredentials && <ErrorText className="text-center">Invalid username / password</ErrorText>}
             </form>
 

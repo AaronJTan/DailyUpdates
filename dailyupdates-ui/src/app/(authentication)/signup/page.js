@@ -117,7 +117,7 @@ export default function () {
                     {errors["confirm-password"] && <ErrorText>{errors["confirm-password"]}</ErrorText>}
                 </div>
 
-                <button type="submit" className="link-cursor btn-primary">Sign Up</button>
+                <button type="submit" className="link-cursor form-btn btn-primary">Sign Up</button>
             </form>
 
             <hr />

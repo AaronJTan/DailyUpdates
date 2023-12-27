@@ -1,5 +1,6 @@
 import './globals.css'
 import Footer from '@/components/Footer'
+import { AuthProvider } from '@/hooks/authContext';
 import { workSans } from "@/styles/fonts";
 
 export const metadata = {
@@ -11,17 +12,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className={`flex flex-col min-h-screen ${workSans.className}`}>
+        <AuthProvider>
+          <div className={`flex flex-col min-h-screen ${workSans.className}`}>
 
-          {children}
-          {/* <header>
+            {children}
+            {/* <header>
             <Navbar />
           </header>
 
           <main className="flex-1">{children}</main> */}
 
-          <Footer />
-        </div>
+            <Footer />
+          </div>
+        </AuthProvider>
       </body>
     </html>
   )

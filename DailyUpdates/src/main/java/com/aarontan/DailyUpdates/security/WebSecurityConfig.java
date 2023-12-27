@@ -51,7 +51,7 @@ public class WebSecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeHttpRequests(auth ->
-						auth.antMatchers("/users/**/feeds/**"). authenticated()
+						auth.antMatchers("/users/**/feeds/**", "/auth/whoami"). authenticated()
 								.anyRequest().permitAll()
 				)
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -61,7 +61,7 @@ public class WebSecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost", "http://192.168.2.103:3000"));
         configuration.setAllowCredentials(true);
 		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "PATCH", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));

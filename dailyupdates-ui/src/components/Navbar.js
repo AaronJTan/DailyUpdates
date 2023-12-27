@@ -10,8 +10,11 @@ import { IoSearch } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { useState } from 'react';
+import { useAuth } from '@/hooks/authContext';
 
 function HambugerMenu({ navbarOpen, setNavBarOpen }) {
+    const { currentUser, logoutUser } = useAuth();
+
     return (
         <nav className={`${navbarOpen ? "block" : "hidden"} w-screen h-screen fixed top-0 left-0 bg-[#161617] text-[#e8e8ed] p-4 text-xl`}>
             <div className='bg-red-200'>
@@ -25,12 +28,20 @@ function HambugerMenu({ navbarOpen, setNavBarOpen }) {
                         </Link>
                     </li>
                 ))}
+
+                {currentUser &&
+                    <li className="font-bold border-2 p-2">
+                        <div>Welcome, {currentUser.username}</div>
+                        <button className="link-cursor btn-primary px-3" onClick={logoutUser}>Log Out</button>
+                    </li>
+                }
             </ul>
         </nav>
     )
 }
 
 export default function Navbar() {
+    const { currentUser, logoutUser } = useAuth();
     const pathname = usePathname();
     const [navbarOpen, setNavBarOpen] = useState(false);
 
@@ -66,6 +77,20 @@ export default function Navbar() {
 
             <div className="hidden lg:block">
                 <div className="border-b-2">
+                    {!currentUser &&
+                        <div className="flex justify-end pt-3 px-3 gap-3">
+                            <Link href="/signup" className="link-cursor btn-primary px-3">Sign Up</Link>
+                            <Link href="/signin" className="link-cursor btn-secondary px-3">Sign In</Link>
+                        </div>
+                    }
+
+                    {currentUser &&
+                        <div className="flex justify-end pt-3 px-3 gap-3">
+                            <div>Welcome, {currentUser.username}</div>
+                            <button className="link-cursor btn-primary px-3" onClick={logoutUser}>Log Out</button>
+                        </div>
+                    }
+
                     <div className='container py-10 grid grid-cols-12 items-center justify-between'>
                         <div className="text-sm col-span-3">{todaysDate}</div>
                         <Link href="/" className="col-span-6" prefetch={false}>

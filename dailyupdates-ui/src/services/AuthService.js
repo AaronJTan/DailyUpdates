@@ -37,7 +37,23 @@ const signup = async (signupPayload) => {
     return body;
 }
 
+const signout = async () => {
+    const response = await fetch('http://192.168.2.103:8080/api/auth/logout', {
+        method: "POST",
+        credentials: "include"
+    })
+
+    const body = await response.json();
+
+    if (!response.ok) {
+        throw { httpStatus: response.status };
+    }
+
+    return body;
+}
+
 export default {
     signin,
-    signup
+    signup,
+    signout
 }
