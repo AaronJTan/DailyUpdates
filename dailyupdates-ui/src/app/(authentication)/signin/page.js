@@ -1,26 +1,84 @@
 "use client"
 
+import ErrorText from "@/components/ErrorText";
+import { useFormFields } from "@/hooks/useFormFields";
+import AuthService from "@/services/AuthService";
+import { handleInputErrorClass } from "@/utils/cssUtils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignInPage() {
+
+    const router = useRouter();
+    const [formData, handleChange] = useFormFields({
+        username: "",
+        password: ""
+    })
+
+    const [errors, setErrors] = useState({});
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const validationErrors = validateForm(formData);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        setErrors({});
+
+        try {
+            const res = await AuthService.signin(formData);
+            localStorage.setItem("loggedIn", true);
+            router.push("/");
+        } catch (error) {
+            if (error.httpStatus) {
+                setErrors({ invalidCredentials: true })
+            }
+        }
+    }
+
+    const validateForm = (formData) => {
+        const errors = {};
+
+        if (!formData.username) {
+            errors.username = 'Email or username is required';
+        }
+        if (!formData.password) {
+            errors.password = 'Password is required';
+        }
+        return errors;
+    }
+
     return (
         <div className="mx-auto max-w-[600px] my-4 bg-white">
 
-            <form className="flex flex-col sm:px-20 p-4 gap-2">
+            <form className="flex flex-col sm:px-20 p-4 gap-2"
+                onSubmit={onSubmit}
+            >
                 <div>
-                    <label for="username">Email or username</label>
+                    <label htmlFor="username">Email or username</label>
                     <input type="text" id="username" name="username"
+                        value={formData.usernameOrEmail} onChange={handleChange}
+                        className={handleInputErrorClass(errors.password)}
                     />
+                    {errors.username && <ErrorText>{errors.username}</ErrorText>}
                 </div>
 
                 <div>
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input type="password" id="password" name="password"
+                        value={formData.password} onChange={handleChange}
+                        className={handleInputErrorClass(errors.password)}
                     />
+                    {errors.password && <ErrorText>{errors.password}</ErrorText>}
                 </div>
 
 
                 <button type="submit" className="link-cursor btn-primary">Sign In</button>
+                {errors.invalidCredentials && <ErrorText className="text-center">Invalid username / password</ErrorText>}
             </form>
 
             <hr />
