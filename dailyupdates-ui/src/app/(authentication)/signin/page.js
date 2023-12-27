@@ -34,7 +34,7 @@ export default function SignInPage() {
             localStorage.setItem("loggedIn", true);
             router.push("/");
         } catch (error) {
-            if (error.httpStatus) {
+            if (error.httpStatus == 401) {
                 setErrors({ invalidCredentials: true })
             }
         }
